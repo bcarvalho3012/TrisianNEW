@@ -1,0 +1,84 @@
+/* Daylight — design tokens. Source of truth: brain/09-design-system.md */
+
+/* The four Graphik weights are declared in layouts/Base.astro, where their URLs go through the base-path helper. */
+/* Metric-matched fallback so text does not jump when Graphik arrives */
+@font-face { font-family: 'Graphik Fallback'; src: local('Helvetica Neue'), local('Arial'); size-adjust: 104%; ascent-override: 82%; descent-override: 18%; line-gap-override: 10%; }
+
+:root {
+  color-scheme: light;
+
+  /* Ground — the time of day */
+  --ground-morning: #FBFAF7;
+  --ground-noon: #FFFFFF;
+  --ground-gold: #FBEDE4;
+  --ground-dusk: #E6E8FB;
+  --ground-night: #010441;
+  --ground-night-2: #0A1260;
+  --ground-sunk: #F3F1EA;
+
+  /* Ink */
+  --ink: #0B1030;
+  --ink-2: #444A68;
+  --ink-3: #5F6480;
+  --rule: #E4E1D8;
+  --control-border: #82879E;
+  --night-ink: #FFFFFF;
+  --night-ink-2: #C9CEF5;
+  --night-ink-3: #9AA1DB;
+
+  /* Brand */
+  --cobalt: #0031A8;
+  --cobalt-deep: #00278A;
+  --bright: #1453FF;
+  --navy: #010441;
+  --periwinkle: #576FF6;
+  --tint-1: #ECEFFE;
+  --tint-2: #C7CBFA;
+
+  /* Light */
+  --sun: #F2B66D;
+  --sun-deep: #9C5306;
+  --sky: #9DB4FF;
+  --wall: #F1E9DD;
+  --wall-2: #E9DFD0;
+
+  /* The live ground and inks (sections re-point these) */
+  --ground: var(--ground-morning);
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-3: var(--ink-3);
+  --accent: var(--cobalt);
+
+  /* Type */
+  --font: 'Graphik', 'Graphik Fallback', 'Helvetica Neue', Arial, sans-serif;
+  --t-display: clamp(3.25rem, 1.2rem + 7.4vw, 8.75rem);
+  --t-statement: clamp(3rem, 1rem + 9vw, 11rem);
+  --t-h1: clamp(2.75rem, 1.9rem + 4.2vw, 5.25rem);
+  --t-h2: clamp(2rem, 1.5rem + 2.4vw, 3.5rem);
+  --t-h3: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
+  --t-question: clamp(1.25rem, 1.1rem + 0.9vw, 1.75rem);
+  --t-lede: clamp(1.1875rem, 1.1rem + 0.5vw, 1.5rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.9375rem;
+  --t-label: 0.8125rem;
+
+  /* Space */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px; --s-11: 192px;
+  --margin: clamp(20px, 5vw, 88px);
+  --gutter: clamp(16px, 2vw, 32px);
+  --max: 1360px;
+  --section: clamp(88px, 10vw, 168px);
+
+  /* Shape and depth */
+  --r-window: clamp(16px, 2vw, 28px);
+  --r-inset: 16px;
+  --r-control: 12px;
+  --shadow-window: 0 1px 2px rgb(11 16 48 / .05), 0 16px 40px -12px rgb(11 16 48 / .14), 0 48px 96px -32px rgb(11 16 48 / .12);
+  --shadow-sheet: 0 1px 2px rgb(11 16 48 / .06), 0 8px 24px -8px rgb(11 16 48 / .12);
+
+  /* Motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.4, 0, .6, 1);
+  --d-1: 180ms; --d-2: 400ms; --d-3: 700ms; --d-4: 1200ms;
+}

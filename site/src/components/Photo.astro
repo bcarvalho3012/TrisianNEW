@@ -1,0 +1,46 @@
+---
+// A photo window. The parent sets the shape; this fills it.
+// With no file for the slot, it shows coded daylight (or nothing, where `standin` is off).
+import { Picture } from 'astro:assets';
+import Daylight from './Daylight.astro';
+import { slotSpec, photoFor, type SlotId } from '../lib/photos';
+
+interface Props {
+  slot: SlotId;
+  /** How wide the window is on screen, for the browser's choice of file. */
+  sizes?: string;
+  /** First screen only: load at once, at high priority. */
+  eager?: boolean;
+  /** The picture adds nothing a nearby heading or link text does not already say. */
+  decorative?: boolean;
+  standin?: boolean;
+  /** The frame fills a wide band here, so use the slot's `wide` focal point if it has one. */
+  wide?: boolean;
+  /** The widest file worth making for this window, in pixels. */
+  max?: number;
+  class?: string;
+}
+const { slot, sizes = '100vw', eager = false, decorative = false, standin = true, wide = false, max = 2400, class: cls = '' } = Astro.props;
+const spec = slotSpec(slot) as ReturnType<typeof slotSpec> & { wide?: string };
+const focal = wide && spec.wide ? spec.wide : spec.position;
+const image = photoFor(slot);
+const ladder = [480, 720, 960, 1280, 1600, 2000, 2400];
+const top = image ? Math.min(image.width, max) : 0;
+const widths = image ? ladder.filter((w) => w < top).concat(top) : [];
+---
+{image ? (
+  <Picture
+    src={image}
+    formats={['avif', 'webp']}
+    widths={widths}
+    sizes={sizes}
+    alt={decorative ? '' : spec.alt}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    decoding={eager ? 'sync' : 'async'}
+    style={`object-position:${focal}`}
+    pictureAttributes={{ class: ['photo', cls].filter(Boolean).join(' '), style: `--fx:${focal.split(' ')[0]}` }}
+  />
+) : standin ? (
+  <Daylight light={spec.light as 'morning'} class={cls} />
+) : null}

@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import Closing from '../../components/Closing.astro';
+import Photo from '../../components/Photo.astro';
+import type { SlotId } from '../../lib/photos';
+import '../../styles/home.css';
+import '../../styles/pages.css';
+import { url } from '../../lib/url';
+import { doorPages } from '../../content/pages';
+
+export function getStaticPaths() {
+  return doorPages.map((door) => ({ params: { door: door.id }, props: { door } }));
+}
+const { door } = Astro.props;
+const others = doorPages.filter((d) => d.id !== door.id);
+---
+<Base title={`${door.name} — Trisian`} description={`${door.lines.join(' ')} ${door.ink}.`} current="who-its-for">
+  <section class="door-hero" data-ground={door.light === 'dusk' ? 'dusk' : door.light === 'gold' ? 'gold' : 'morning'}>
+    <div class="door-hero__light" style={`view-transition-name: door-${door.id}`}><Photo slot={`door-${door.id}` as SlotId} sizes="100vw" eager wide /></div>
+    <div class="wrap door-hero__inner">
+      <p class="t-label">{door.name}</p>
+      <h1 class="t-display assemble">
+        {door.lines.map((line, i) => <span class="line"><span style={`--i:${i}`}>{line}</span></span>)}
+        <span class="line"><span style={`--i:${door.lines.length}`}><span class="ink" style={`--i:${door.lines.length}`}>{door.ink}</span>.</span></span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="band" data-ground="morning">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2">What you’re protecting, and who asks</h2></div>
+      <div class="band__body"><p class="t-lede">{door.protect}</p></div>
+    </div>
+  </section>
+
+  <section class="band" data-ground="morning">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2">What in Safe Workspace <span class="ink">answers it</span></h2></div>
+      <div class="band__body">
+        <ul class="facts">
+          {door.facts.map((f) => <li>{f.body}</li>)}
+        </ul>
+        <p>{door.start}</p>
+        <p><a class="link" href={url('safe-workspace')}>How Safe Workspace works <span class="arrow" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" data-ground="morning" aria-label="The other doors">
+    <div class="wrap">
+      <ul class="seats">
+        {others.map((d) => (
+          <li><p class="t-label">{d.name}</p><p class="t-h3"><a class="link" href={url(`who-its-for/${d.id}`)}>{d.lines.join(' ')} {d.ink}. <span class="arrow" aria-hidden="true">→</span></a></p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

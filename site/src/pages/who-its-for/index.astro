@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Closing from '../../components/Closing.astro';
+import Photo from '../../components/Photo.astro';
+import type { SlotId } from '../../lib/photos';
+import '../../styles/home.css';
+import '../../styles/pages.css';
+import { url } from '../../lib/url';
+import { who } from '../../content/home';
+import { whoPage as c } from '../../content/pages';
+---
+<Base title={c.title} description={c.description} current="who-its-for">
+  <PageHero eyebrow="Who it’s for" lines={['For organizations', 'that have to']} ink={who.ink} lede={who.sub} />
+
+  <section class="band" data-ground="morning" aria-labelledby="isthis-h">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2" id="isthis-h">Is this you?</h2></div>
+      <ul class="isthis band__body" style="columns: 1; grid-column: 6 / -1; display: block;">
+        {who.isThisYou.map((line) => <li>{line}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="who" data-ground="noon" aria-label="The four doors">
+    <ul class="doors" data-enter="doors">
+      {who.doors.map((door, k) => (
+        <li class="door" style={`--k:${k}`}>
+          <a href={url(`who-its-for/${door.id}`)}>
+            <div class="door__photo" style={`view-transition-name: door-${door.id}`}><Photo slot={`door-${door.id}` as SlotId} sizes="(min-width: 901px) 50vw, 100vw" decorative /></div>
+            <div class="door__text">
+              <p class="t-label">{door.name}</p>
+              <p class="t-h3 door__line">{door.line}</p>
+              <p class="t-small door__sub">{door.sub}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="wrap who__close">
+      <p class="t-h1" style="max-width: 16em">{who.open}</p>
+      <p class="t-question">{who.rule}</p>
+    </div>
+  </section>
+
+  <section class="band" data-ground="morning" aria-labelledby="seats-h">
+    <div class="wrap">
+      <h2 class="t-h2" id="seats-h" style="margin-bottom: var(--s-6)">{c.seats.heading}</h2>
+      <ul class="seats">
+        {c.seats.items.map((s) => <li><p class="t-label">{s.seat}</p><p class="t-h3">{s.line}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

@@ -1,0 +1,114 @@
+---
+// The six-part figure: six solid sheets seen from the front, one behind another.
+// Used large in "Through the window" and compact wherever the workspace is referred to again.
+import ProductWindow from './ProductWindow.astro';
+interface Props { compact?: boolean; class?: string; }
+const { compact = false, class: cls = '' } = Astro.props;
+const parts = ['desktop', 'm365', 'security', 'monitoring', 'compliance', 'support'];
+const names = ['The desktop', 'Microsoft 365', 'Security', 'Monitoring', 'Compliance controls', 'Support'];
+---
+<div class:list={['stack', 'ambient', { 'stack--compact': compact }, cls]} data-stack data-active="0" role="img" aria-label="Illustration: the six parts of Safe Workspace as six sheets, one behind another — the desktop, Microsoft 365, security, monitoring, compliance controls and support.">
+  {parts.map((part, i) => (
+    <div class="sheet" data-part={part} style={`--i:${i}`} aria-hidden="true">
+      <span class="sheet__name">{names[i]}</span>
+      <div class="sheet__body">
+        {part === 'desktop' && <ProductWindow compact class="sheet__pw" />}
+        {part === 'm365' && (
+          <div class="mini mini--m365">
+            <span>Mail</span><span>Files</span><span>Meetings</span>
+            <em data-license>Business Premium · E3 · E5</em>
+          </div>
+        )}
+        {part === 'security' && (
+          <div class="mini mini--security">
+            <p><b>Sign-in</b><i>Verified</i></p>
+            <ul><li></li><li></li><li class="drift"></li><li></li><li></li></ul>
+            <em>Published baseline · free of drift</em>
+          </div>
+        )}
+        {part === 'monitoring' && (
+          <div class="mini mini--monitoring">
+            <ul class="hosts"><li></li><li></li><li></li><li></li><li class="fresh"></li></ul>
+            <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0 22 H70 l10 -14 l12 26 l10 -18 l8 6 H180 l10 -10 l10 16 l8 -6 H300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <em>24x7 · automated</em>
+          </div>
+        )}
+        {part === 'compliance' && (
+          <div class="mini mini--compliance">
+            <ul class="controls"><li>Access</li><li>Baseline</li><li>Evidence</li></ul>
+            <ul class="frameworks" data-frameworks><li>CIS Controls v8.1</li><li>NIST CSF 2.0</li><li>HIPAA</li><li>SOC 2</li><li>ISO/IEC 27001</li><li>HITRUST</li></ul>
+          </div>
+        )}
+        {part === 'support' && (
+          <div class="mini mini--support">
+            <ol><li>Request</li><li>One owner</li><li>Resolved</li></ol>
+            <em>Level 1 to Level 3</em>
+          </div>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .stack { position: relative; aspect-ratio: 5 / 4; width: 100%; container-type: inline-size; --step: 6.2%; }
+  .sheet {
+    position: absolute; left: 0; top: 0; width: 70%; aspect-ratio: 16 / 11.4;
+    background: #fff; border-radius: clamp(10px, 3cqi, 18px); box-shadow: var(--shadow-sheet);
+    border: 1px solid color-mix(in srgb, var(--ink) 7%, transparent);
+    padding: clamp(8px, 2.6cqi, 18px); display: grid; grid-template-rows: auto 1fr; gap: clamp(6px, 1.6cqi, 12px);
+    font-size: clamp(8px, 2.1cqi, 13px); line-height: 1.35; color: var(--ink);
+    /* Position in the stack: the active sheet is in front; those behind step up and to the right. */
+    --d: calc(var(--i) - var(--active, 0));
+    transform: translate(calc(var(--d) * 6.2cqi), calc(var(--d) * -4.6cqi)) scale(calc(1 - var(--d) * .035));
+    transform-origin: left top; z-index: calc(10 - var(--i));
+    opacity: calc(1 - max(var(--d), 0) * .06);
+    transition: transform var(--d-4) var(--ease), opacity var(--d-3) var(--ease);
+  }
+  .stack { padding-top: 24cqi; }
+  .sheet { top: auto; bottom: 0; }
+  /* Sheets the visitor has passed through have flown past: larger, and gone. */
+  .sheet.is-passed { transform: translate(-6cqi, 8cqi) scale(1.18); opacity: 0; pointer-events: none; }
+  .sheet__name { font-weight: 500; font-size: 1.05em; color: var(--ink-2); display: flex; align-items: center; gap: .6em; }
+  .sheet__name::before { content: ''; width: .5em; height: .5em; border-radius: 50%; background: var(--cobalt); }
+  .sheet__body { min-height: 0; display: grid; align-content: center; }
+  .sheet__pw { box-shadow: none; padding: 0; }
+  .sheet :global(.pw__screen) { border-radius: 6px; }
+  .mini { display: grid; gap: .9em; align-content: center; height: 100%; }
+  .mini em { font-style: normal; color: var(--ink-3); }
+  .mini--m365 { grid-template-columns: repeat(3, 1fr); }
+  .mini--m365 span { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: .6em; background: var(--tint-1); color: var(--cobalt); font-weight: 500; }
+  .mini--m365 em { grid-column: 1 / -1; }
+  .mini--security p { display: flex; justify-content: space-between; align-items: center; padding: .6em .9em; border-radius: .6em; background: var(--ground-sunk); margin: 0; }
+  .mini--security p b { font-weight: 500; }
+  .mini--security p i { font-style: normal; color: var(--cobalt); font-weight: 500; }
+  .mini--security p i::before { content: '✓ '; }
+  .mini--security ul { display: grid; gap: .45em; }
+  .mini--security li { height: .5em; border-radius: 99px; background: var(--tint-2); width: 86%; }
+  .mini--security li:nth-child(2) { width: 68%; }
+  .mini--security li:nth-child(4) { width: 76%; }
+  .mini--security li:nth-child(5) { width: 58%; }
+  .mini--monitoring .hosts { display: grid; grid-template-columns: repeat(5, 1fr); gap: .6em; }
+  .mini--monitoring .hosts li { aspect-ratio: 1; border-radius: .5em; background: var(--tint-1); border: 1px solid var(--tint-2); }
+  .mini--monitoring .hosts .fresh { background: var(--cobalt); border-color: var(--cobalt); }
+  .mini--monitoring svg { width: 100%; height: 2.6em; color: var(--cobalt); }
+  .mini--compliance { grid-template-columns: 1fr 1.3fr; align-items: center; }
+  .mini--compliance li { padding: .35em .7em; border-radius: .5em; }
+  .mini--compliance .controls li { background: var(--ground-sunk); margin-bottom: .4em; font-weight: 500; }
+  .mini--compliance .frameworks { display: flex; flex-wrap: wrap; gap: .35em; }
+  .mini--compliance .frameworks li { border: 1px solid var(--tint-2); color: var(--cobalt); padding: .2em .55em; white-space: nowrap; }
+  .mini--support ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6em; counter-reset: s; }
+  .mini--support li { position: relative; padding: .7em .6em; border-radius: .6em; background: var(--ground-sunk); font-weight: 500; text-align: center; }
+  .mini--support li:nth-child(2) { background: var(--cobalt); color: #fff; }
+  .mini--support li:not(:last-child)::after { content: '→'; position: absolute; right: -.62em; top: 50%; translate: 0 -50%; color: var(--ink-3); z-index: 1; }
+
+  .stack--compact { --step: 5%; }
+  .stack--compact .sheet { width: 74%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mini--security .drift { animation: drift-back 6s var(--ease) infinite; }
+    .mini--monitoring svg path { stroke-dasharray: 60 520; animation: pulse 5s linear infinite; }
+    @keyframes drift-back { 0%, 55%, 100% { translate: 0 0; background: var(--tint-2); } 20%, 35% { translate: 14% 0; background: var(--sun); } }
+    @keyframes pulse { from { stroke-dashoffset: 580; } to { stroke-dashoffset: 0; } }
+  }
+</style>

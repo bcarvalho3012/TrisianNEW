@@ -1,0 +1,19 @@
+---
+// The opening of a sub-page: a headline that assembles, with its answer inked in.
+interface Props { eyebrow?: string; lines: string[]; ink: string; after?: string; lede?: string; statement?: boolean; }
+const { eyebrow, lines, ink, after = '', lede, statement = false } = Astro.props;
+const hasFigure = Astro.slots.has('default');
+---
+<section class:list={['page-hero', { 'page-hero--figure': hasFigure }]} data-ground="morning">
+  <div class="wrap page-hero__grid">
+    <div class="page-hero__text">
+      {eyebrow && <p class="t-label page-hero__eyebrow">{eyebrow}</p>}
+      <h1 class:list={[statement ? 't-statement' : 't-display', 'assemble']}>
+        {lines.map((line, i) => <span class="line"><span style={`--i:${i}`}>{line}</span></span>)}
+        <span class="line"><span style={`--i:${lines.length}`}><span class="ink" style={`--i:${lines.length}`}>{ink}</span>{after ? ` ${after}` : '.'}</span></span>
+      </h1>
+      {lede && <p class="t-lede measure page-hero__lede">{lede}</p>}
+    </div>
+    {hasFigure && <div class="page-hero__figure" data-enter="open"><div><slot /></div></div>}
+  </div>
+</section>

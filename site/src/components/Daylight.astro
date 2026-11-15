@@ -1,0 +1,47 @@
+---
+// A room lit by a window, drawn in CSS. It stands where a photograph will go (brain/09 §7.3)
+// and is replaced, not restyled, when the photograph exists. Never ships as final imagery.
+interface Props { light?: 'morning' | 'noon' | 'gold' | 'dusk' | 'night'; alt?: string; class?: string; }
+const { light = 'morning', alt = '', class: cls = '' } = Astro.props;
+---
+<div class:list={['daylight', `daylight--${light}`, 'ambient', cls]} role={alt ? 'img' : undefined} aria-label={alt || undefined} aria-hidden={alt ? undefined : 'true'}>
+  <span class="daylight__wall"></span>
+  <span class="daylight__sun daylight__sun--a"></span>
+  <span class="daylight__sun daylight__sun--b"></span>
+  <span class="daylight__floor"></span>
+  {light === 'night' && <span class="daylight__city"></span>}
+</div>
+
+<style>
+  .daylight { position: relative; overflow: hidden; isolation: isolate; width: 100%; height: 100%; --w1: #F4ECE0; --w2: #E8DDCC; --f: #D9CCB8; --sunc: #FFF4DC; --sun-o: .9; }
+  .daylight--noon { --w1: #F6F2EA; --w2: #ECE6DA; --f: #DCD4C6; --sunc: #FFFDF6; --sun-o: .95; }
+  .daylight--gold { --w1: #F6E3CF; --w2: #EBCBAA; --f: #D8B28C; --sunc: #FFD9A0; --sun-o: .85; }
+  .daylight--dusk { --w1: #D9DBF3; --w2: #BFC3EC; --f: #A9AEDD; --sunc: #F3D9E6; --sun-o: .5; }
+  .daylight--night { --w1: #0A1260; --w2: #010441; --f: #020633; --sunc: #F2B66D; --sun-o: .16; }
+  .daylight__wall { position: absolute; inset: 0; background: linear-gradient(168deg, var(--w1) 0%, var(--w2) 100%); }
+  .daylight__floor { position: absolute; inset: auto 0 0 0; height: 20%; background: linear-gradient(180deg, color-mix(in srgb, var(--f) 70%, transparent), var(--f)); box-shadow: 0 -1px 0 color-mix(in srgb, #000 6%, transparent); }
+  .daylight__sun {
+    position: absolute; top: 10%; left: 24%; width: 52%; height: 60%;
+    background: var(--sunc); opacity: var(--sun-o); filter: blur(7px);
+    transform: skewX(-20deg) skewY(4deg);
+    -webkit-mask-image: linear-gradient(90deg, #000 0 47%, transparent 47% 53%, #000 53% 100%), linear-gradient(180deg, #000 0 31%, transparent 31% 36%, #000 36% 64%, transparent 64% 69%, #000 69% 100%);
+    mask-image: linear-gradient(90deg, #000 0 47%, transparent 47% 53%, #000 53% 100%), linear-gradient(180deg, #000 0 31%, transparent 31% 36%, #000 36% 64%, transparent 64% 69%, #000 69% 100%);
+    -webkit-mask-composite: source-in; mask-composite: intersect;
+    animation: drift 46s var(--ease-out) infinite alternate;
+  }
+  .daylight__sun--b { top: 56%; left: 8%; width: 60%; height: 34%; opacity: calc(var(--sun-o) * .55); filter: blur(14px); transform: skewX(-38deg); animation-duration: 58s; }
+  .daylight--night .daylight__sun--a { top: 18%; left: 58%; width: 22%; height: 30%; filter: blur(22px); transform: none; -webkit-mask-image: none; mask-image: none; border-radius: 50%; }
+  .daylight--night .daylight__sun--b { display: none; }
+  .daylight__city {
+    position: absolute; inset: 22% 6% 30% 6%; opacity: .8; filter: blur(1.2px);
+    background:
+      radial-gradient(circle, var(--sun) 0 1.6px, transparent 2.4px) 6% 20% / 46px 38px,
+      radial-gradient(circle, var(--sky) 0 1.4px, transparent 2.2px) 30% 60% / 62px 44px,
+      radial-gradient(circle, #fff 0 1px, transparent 1.8px) 80% 10% / 38px 52px;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+    animation: twinkle 9s ease-in-out infinite alternate;
+  }
+  @keyframes drift { from { translate: -2.5% 0; } to { translate: 3% 1.5%; } }
+  @keyframes twinkle { from { opacity: .55; } to { opacity: .9; } }
+</style>

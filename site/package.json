@@ -1,0 +1,24 @@
+{
+  "name": "trisian-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:claims": "node tools/claims-lint.mjs",
+    "check:truth": "node tools/truth-check.mjs",
+    "check:contrast": "node tools/contrast-check.mjs",
+    "check:photos": "node tools/photo-check.mjs",
+    "photo": "node tools/photo-prep.mjs",
+    "photo:approve": "node tools/photo-approve.mjs",
+    "check": "npm run check:truth && npm run check:contrast && npm run check:photos && npm run build && npm run check:claims"
+  },
+  "dependencies": {
+    "astro": "^7.4.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

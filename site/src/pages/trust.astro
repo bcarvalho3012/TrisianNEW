@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Closing from '../components/Closing.astro';
+import '../styles/home.css';
+import '../styles/pages.css';
+import { trustPage as c } from '../content/pages';
+import { proof } from '../content/home';
+---
+<Base title={c.title} description={c.description} current="trust">
+  <PageHero eyebrow="Trust" lines={[c.statement]} ink={c.ink} after=" " lede={c.lede} statement />
+
+  <section class="band" data-ground="morning" aria-labelledby="questions-h">
+    <div class="wrap">
+      <h2 class="sr-only" id="questions-h">Five questions a security team sends</h2>
+      <ul class="qa">
+        {c.questions.map((q, i) => (
+          <li>
+            <p class="t-question">{q.question}</p>
+            <div class="qa__answer">
+              <p class="t-h2"><span class="ink">{q.answer}</span></p>
+              <p class="t-lede measure">{q.body}</p>
+              {i === 1 && (
+                <>
+                  <table class="hold">
+                    <caption class="sr-only">What Trisian holds, and what its controls support</caption>
+                    <tbody>
+                      <tr><th scope="row" class="t-label">We hold</th><td class="t-h3">{proof.hold}</td></tr>
+                      {proof.support.map((s, k) => (
+                        <tr><th scope="row" class="t-label">{k === 0 ? 'Our controls support your obligations under' : ''}</th><td><span class="t-label">{s.plan}</span><span class="t-h3">{s.frameworks.join(' · ')}</span></td></tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p class="t-small measure">{proof.qualifier}</p>
+                </>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" data-ground="noon" aria-labelledby="center-h">
+    <div class="wrap">
+      <p class="mission" id="center-h">{c.closing}</p>
+      <p class="t-lede measure" style="margin-block: var(--s-6)">The certificate details, our policies, our controls and our subprocessors are on the Trust Center. Some documents are public; others are shared on request, under a non-disclosure agreement.</p>
+      <a class="btn" href="https://trust.trisian.com" rel="noopener">Go to the Trust Center <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

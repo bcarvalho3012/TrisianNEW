@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Closing from '../components/Closing.astro';
+import Photo from '../components/Photo.astro';
+import ProductWindow from '../components/ProductWindow.astro';
+import { eraSlot, erasReady } from '../lib/photos';
+import '../styles/home.css';
+import '../styles/pages.css';
+import { companyPage as c } from '../content/pages';
+import { since } from '../content/home';
+---
+<Base title={c.title} description={c.description} current="company">
+  <PageHero eyebrow="Company" lines={c.lines} ink={c.ink} />
+
+  <section class="since" data-ground="morning" aria-labelledby="story-h" style="padding-bottom: var(--s-9)">
+    <div class="wrap">
+      <p class="since__year t-statement" aria-hidden="true" data-year><span>1998</span></p>
+      <h2 class="t-h2" id="story-h">{since.intro}</h2>
+    </div>
+    <div class="eras" role="region" aria-label="The company, era by era" tabindex="0" data-eras>
+      {since.eras.map((era) => (
+        <article class="era" data-era-year={era.year}>
+          <p class="era__year">{era.year}</p>
+          {erasReady && (
+            <div class="era__desk">
+              {eraSlot(era.year) ? <Photo slot={eraSlot(era.year)!} sizes="(min-width: 540px) 430px, 80vw" max={960} /> : <ProductWindow compact />}
+            </div>
+          )}
+          <h3 class="t-label">{era.name}</h3>
+          <p class="t-lede">{era.what}</p>
+          <p class="era__taught">{era.taught}</p>
+          <p class="t-small era__part">Became: {era.part}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="band" data-ground="noon" aria-labelledby="stand-h">
+    <div class="wrap">
+      <h2 class="t-label" id="stand-h" style="margin-bottom: var(--s-5)">What we are here to do</h2>
+      <p class="mission">{c.mission}</p>
+      <ul class="pillars">
+        {c.pillars.map((p) => <li><h3>{p.name}</h3><p class="t-lede">{p.line}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" data-ground="morning" aria-labelledby="people-h">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2" id="people-h">How we work</h2></div>
+      <div class="band__body">
+        <p class="t-lede">{c.people}</p>
+        <p class="t-lede">{c.oneBrand}</p>
+      </div>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

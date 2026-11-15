@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Closing from '../components/Closing.astro';
+import Stack from '../components/Stack.astro';
+import '../styles/home.css';
+import '../styles/pages.css';
+import { url } from '../lib/url';
+import { safeWorkspace as c } from '../content/pages';
+import { scope } from '../content/home';
+import scopeData from '../data/scope.json';
+---
+<Base title={c.title} description={c.description} current="safe-workspace">
+  <PageHero eyebrow="Safe Workspace" lines={c.lines} ink={c.ink} lede={c.lede}>
+    <Stack compact />
+  </PageHero>
+
+  <section class="band" data-ground="morning" aria-labelledby="parts-h">
+    <div class="wrap">
+      <h2 class="sr-only" id="parts-h">The six parts</h2>
+      <ul class="parts">
+        {c.parts.map((part) => (
+          <li>
+            <h3 class="t-h2">{part.name}</h3>
+            <p class="t-lede parts__body">{part.body}</p>
+            <p class="parts__plan">{part.byPlan}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="built" data-ground="noon" aria-labelledby="built-h">
+    <div class="wrap">
+      <h2 class="t-h1" id="built-h" style="margin-bottom: var(--s-8)">{c.built.lines.join(' ')} <span class="ink">{c.built.ink}</span>.</h2>
+      <ol class="sequence">
+        {c.built.steps.map((step) => (
+          <li><h3>{step.name}</h3><p>{step.body}</p></li>
+        ))}
+      </ol>
+      <p class="t-lede measure" style="margin-top: var(--s-8)">{c.built.reach}</p>
+    </div>
+  </section>
+
+  <section class="band" id="where" data-ground="morning" aria-labelledby="where-h">
+    <div class="wrap">
+      <h2 class="sr-only" id="where-h">Where it lives</h2>
+      <ul class="qa">
+        {c.where.items.map((item, i) => (
+          <li>
+            <p class="t-question">{item.question}</p>
+            <div class="qa__answer">
+              <p class="t-h2"><span class="ink">{item.answer}</span></p>
+              <p class="t-lede measure">{item.body}</p>
+              {i === 1 && (
+                <div class="where" role="img" aria-label="Illustration: your Azure tenant, joined to your datacenter by a private connection.">
+                  <div class="where__box where__box--azure" aria-hidden="true"><p>Your Azure tenant</p><p class="t-small">Safe Workspace, on Azure Virtual Desktop</p></div>
+                  <p class="where__link" aria-hidden="true">a private connection</p>
+                  <div class="where__box where__box--dc" aria-hidden="true"><p>Your datacenter</p><p class="t-small">What you already run</p></div>
+                </div>
+              )}
+              {i === 2 && <p><a class="link" href={url('trust')}>More on the Trust page <span class="arrow" aria-hidden="true">→</span></a></p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="scope band" id="scope" data-ground="morning" aria-labelledby="scope-h">
+    <div class="wrap">
+      <div class="grid scope__head">
+        <p class="t-question">{scope.question}</p>
+        <h2 class="t-h1" id="scope-h">Inside the scope, <span class="ink">we own the outcome</span>.</h2>
+      </div>
+      <table class="lineof">
+        <caption class="sr-only">The line of responsibility: what is ours and what is yours</caption>
+        <thead><tr><td></td><th scope="col">Ours</th><th scope="col">Yours</th></tr></thead>
+        <tbody>
+          {scope.line.map((row) => (
+            <tr><th scope="row" class="t-label">{row.area}</th><td class="t-h3 lineof__ours">{row.ours}</td><td class="t-h3 lineof__yours">{row.yours}</td></tr>
+          ))}
+        </tbody>
+      </table>
+      <div class="grid scope__body">
+        <p class="t-h2 scope__principle"><span class="ink">{scope.principle}</span></p>
+        <div>
+          <p class="t-lede">{scope.body}</p>
+          <ul class="commitments">
+            {scope.commitments.map((item) => <li><strong>{item.lead}</strong> {item.body}</li>)}
+          </ul>
+          <p>{c.outside}</p>
+        </div>
+      </div>
+      <div class="explorer" data-explorer>
+        <p class="t-h3">{scope.explorerPrompt}</p>
+        <ul class="chips">
+          {scopeData.situations.map((s) => (
+            <li><button type="button" class="chip" data-situation={s.id} data-side={s.side} data-verdict={s.verdict} data-answer={s.answer} aria-pressed="false">{s.label}</button></li>
+          ))}
+        </ul>
+        <div class="explorer__field">
+          <div class="zone zone--inside"><p class="t-label">Inside the Managed Scope</p><p class="zone__terms">an owner · a service level · a resolution path</p><ul data-placed="inside"></ul></div>
+          <div class="zone zone--outside"><p class="t-label">Outside, defined in writing</p><ul data-placed="outside"></ul></div>
+        </div>
+        <p class="explorer__answer" aria-live="polite" data-answer><span class="t-small">Choose a situation to see where it lands.</span></p>
+        <noscript>
+          <dl class="explorer__list">
+            {scopeData.situations.map((s) => <><dt>{s.label} <em>{s.verdict}</em></dt><dd>{s.answer}</dd></>)}
+          </dl>
+        </noscript>
+        <p class="t-small">{scope.qualifier}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" data-ground="noon" aria-labelledby="before-h">
+    <div class="wrap">
+      <h2 class="t-h1" id="before-h" style="margin-bottom: var(--s-7)">{c.before.heading.join(' ')} <span class="ink">{c.before.ink}</span>.</h2>
+      <table class="beforewith">
+        <caption class="sr-only">Six tasks, before Safe Workspace and with it</caption>
+        <thead><tr><td></td><th scope="col">Before Safe Workspace</th><th scope="col">With Safe Workspace</th></tr></thead>
+        <tbody>
+          {c.before.rows.map((row) => <tr><th scope="row">{row.task}</th><td>{row.before}</td><td>{row.withIt}</td></tr>)}
+        </tbody>
+      </table>
+      <p style="margin-top: var(--s-7)"><a class="link" href={url('plans')}>See the plans <span class="arrow" aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <Closing />
+</Base>

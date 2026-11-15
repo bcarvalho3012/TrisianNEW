@@ -1,0 +1,129 @@
+/* Pages beyond Home. Each has its own opening and its own structure. Spec: brain/07. */
+
+/* ── Page hero ────────────────────────────────────────────────────────── */
+.page-hero { padding-top: clamp(120px, 11vw, 184px); padding-bottom: var(--s-9); }
+.page-hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); align-items: end; }
+.page-hero__text { grid-column: 1 / -1; display: grid; gap: var(--s-6); }
+.page-hero--figure .page-hero__text { grid-column: 1 / span 7; }
+.page-hero__figure { grid-column: 8 / -1; }
+.page-hero__lede { max-width: 34em; }
+@media (max-width: 900px) { .page-hero--figure .page-hero__text, .page-hero__figure { grid-column: 1 / -1; } .page-hero { padding-top: 104px; } }
+
+/* ── A band of prose with a heading to its left ───────────────────────── */
+.band { padding-block: var(--s-9); }
+.band + .band { padding-top: 0; }
+.band__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); }
+.band__head { grid-column: 1 / span 4; display: grid; gap: var(--s-4); align-content: start; }
+.band__body { grid-column: 6 / -1; display: grid; gap: var(--s-5); }
+.band__wide { grid-column: 1 / -1; }
+@media (max-width: 900px) { .band__head, .band__body { grid-column: 1 / -1; } }
+
+/* ── The six parts, as a ruled list ───────────────────────────────────── */
+.parts { counter-reset: none; }
+.parts li { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-3); padding-block: var(--s-6); border-top: 1.5px solid var(--fg); align-items: start; }
+.parts h3 { grid-column: 1 / span 4; }
+.parts .parts__body { grid-column: 6 / span 5; }
+.parts .parts__plan { grid-column: 11 / -1; color: var(--fg-2); font-size: var(--t-small); }
+@media (max-width: 900px) { .parts h3, .parts .parts__body, .parts .parts__plan { grid-column: 1 / -1; } }
+
+/* ── Assess, build, run: one line of three ────────────────────────────── */
+.sequence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); position: relative; }
+.sequence li { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); position: relative; }
+.sequence li::before { content: ''; position: absolute; left: 0; right: calc(var(--gutter) * -1); top: 0; height: 1.5px; background: var(--fg); }
+.sequence li:last-child::before { right: 0; }
+.sequence li::after { content: ''; position: absolute; left: 0; top: -4px; width: 9.5px; height: 9.5px; border-radius: 50%; background: var(--accent); }
+.sequence h3 { font-size: var(--t-h2); font-weight: 300; letter-spacing: -.03em; line-height: 1.05; }
+.sequence p { color: var(--fg-2); }
+@media (max-width: 800px) { .sequence { grid-template-columns: 1fr; } .sequence li::before { right: 0; } }
+
+/* ── Question and answer rows ─────────────────────────────────────────── */
+.qa { display: grid; }
+.qa > li, .qa > div { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-3); padding-block: var(--s-7); border-top: 1.5px solid var(--fg); }
+.qa .t-question { grid-column: 1 / span 4; }
+.qa .qa__answer { grid-column: 6 / -1; display: grid; gap: var(--s-4); }
+@media (max-width: 900px) { .qa .t-question, .qa .qa__answer { grid-column: 1 / -1; } }
+
+/* ── Where it lives: your tenant, your datacenter, one private connection ─ */
+.where { display: grid; grid-template-columns: 1.4fr auto 1fr; align-items: center; gap: 0; margin-block: var(--s-7) var(--s-4); max-width: 880px; }
+.where__box { padding: var(--s-6); border-radius: var(--r-window); display: grid; gap: var(--s-3); min-height: 180px; align-content: space-between; }
+.where__box--azure { background: var(--tint-1); box-shadow: inset 0 0 0 1.5px var(--cobalt); }
+.where__box--dc { box-shadow: inset 0 0 0 1.5px var(--control-border); }
+.where__box p:first-child { font-size: var(--t-h3); font-weight: 500; letter-spacing: -.02em; }
+.where__link { position: relative; width: clamp(80px, 12vw, 180px); text-align: center; font-size: var(--t-label); font-weight: 500; color: var(--fg-2); padding-bottom: 14px; }
+.where__link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--cobalt); }
+@media (max-width: 700px) { .where { grid-template-columns: 1fr; } .where__link { width: auto; padding: 22px 0; display: grid; justify-items: center; } .where__link::after { left: 50%; right: auto; top: 0; bottom: 0; width: 1.5px; height: auto; z-index: 0; } .where__link { isolation: isolate; } .where__link::before { content: ''; position: absolute; inset: 14px 20% 14px 20%; background: var(--ground); z-index: 1; } .where__link { position: relative; } }
+
+/* ── Before, and with ─────────────────────────────────────────────────── */
+.beforewith th, .beforewith td { text-align: left; vertical-align: top; padding: var(--s-5) var(--s-5) var(--s-5) 0; border-top: 1px solid var(--rule); }
+.beforewith thead th { border-top: 0; font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; padding-bottom: var(--s-4); }
+.beforewith thead th:last-child { font-weight: 600; color: var(--accent); }
+.beforewith tbody tr:first-child th, .beforewith tbody tr:first-child td { border-top: 1.5px solid var(--fg); }
+.beforewith tbody th { width: 26%; font-weight: 500; }
+.beforewith tbody td:nth-child(2) { width: 30%; color: var(--fg-3); }
+.beforewith tbody td:last-child { font-size: var(--t-lede); letter-spacing: -.01em; line-height: 1.35; }
+@media (max-width: 800px) {
+  .beforewith thead { display: none; }
+  .beforewith tbody tr { display: grid; padding-block: var(--s-4); border-top: 1.5px solid var(--fg); }
+  .beforewith tbody th, .beforewith tbody td { width: auto; border: 0; padding: 3px 0; }
+  .beforewith tbody tr:first-child th, .beforewith tbody tr:first-child td { border: 0; }
+  .beforewith tbody td:nth-child(2)::before { content: 'Before: '; }
+}
+
+/* ── Plans page ───────────────────────────────────────────────────────── */
+.plans3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); }
+.plans3 > div { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }
+.plans3 h2 { font-size: var(--t-h1); font-weight: 300; letter-spacing: -.035em; line-height: 1; }
+.plans3 > div:nth-child(2) h2, .plans3 > div:nth-child(3) h2 { color: var(--fg); }
+.compare { margin-top: var(--s-8); font-size: var(--t-small); }
+.compare th, .compare td { text-align: left; vertical-align: top; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule); font-weight: 400; }
+.compare thead th { font-size: var(--t-label); font-weight: 500; color: var(--fg-3); border-bottom: 1.5px solid var(--fg); }
+.compare tbody th { width: 34%; font-weight: 500; }
+.compare td[data-state='in'] { color: var(--cobalt); font-weight: 500; }
+.compare td[data-state='no'] { color: var(--fg-3); }
+.compare .mark { display: inline-block; width: 1.2em; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: var(--s-5); font-size: var(--t-small); color: var(--fg-2); }
+.invoice { display: grid; }
+.invoice li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); column-gap: var(--gutter); padding-block: var(--s-4); border-top: 1px solid var(--rule); }
+.invoice li:first-child { border-top: 1.5px solid var(--fg); }
+.invoice strong { font-weight: 500; }
+.invoice span { color: var(--fg-2); }
+@media (max-width: 800px) { .plans3 { grid-template-columns: 1fr; row-gap: var(--s-6); } .compare { display: block; overflow-x: auto; } .compare table { min-width: 620px; } }
+
+/* ── Who it's for: seats; door pages ──────────────────────────────────── */
+.seats li { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 6px; padding-block: var(--s-5); border-top: 1px solid var(--rule); }
+.seats li:first-child { border-top: 1.5px solid var(--fg); }
+.seats .t-label { grid-column: 1 / span 4; padding-top: .45em; }
+.seats .t-h3 { grid-column: 6 / -1; font-weight: 300; }
+@media (max-width: 900px) { .seats .t-label, .seats .t-h3 { grid-column: 1 / -1; } }
+.door-hero { position: relative; min-height: min(88vh, 860px); display: grid; align-items: end; overflow: hidden; }
+.door-hero__light { position: absolute; inset: 0; }
+/* Over a photograph, the page ground rises from the foot of the frame so the headline sits on it. */
+.door-hero__light:has(.photo)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, var(--ground) 0 26%, transparent 74%), linear-gradient(90deg, color-mix(in srgb, var(--ground) 90%, transparent) 0, color-mix(in srgb, var(--ground) 66%, transparent) 46%, transparent 80%); }
+.door-hero__inner { position: relative; padding-block: clamp(140px, 16vw, 240px) var(--s-9); display: grid; gap: var(--s-5); }
+.door-hero .t-display { max-width: 12em; font-size: clamp(2.75rem, 1.4rem + 5.6vw, 6.75rem); }
+.facts li { padding-block: var(--s-5); border-top: 1px solid var(--rule); font-size: var(--t-lede); letter-spacing: -.01em; line-height: 1.4; }
+.facts li:first-child { border-top: 1.5px solid var(--fg); }
+
+/* ── Trust; Company ───────────────────────────────────────────────────── */
+.mission { font-size: var(--t-h2); font-weight: 300; letter-spacing: -.03em; line-height: 1.12; max-width: 22em; text-wrap: balance; }
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); margin-top: var(--s-8); }
+.pillars li { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }
+.pillars h3 { font-size: var(--t-h2); font-weight: 300; letter-spacing: -.03em; line-height: 1; color: var(--accent); }
+@media (max-width: 800px) { .pillars { grid-template-columns: 1fr; } }
+
+/* ── Start ────────────────────────────────────────────────────────────── */
+.routes li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--gutter); padding-block: var(--s-5); border-top: 1px solid var(--rule); }
+.routes li:first-child { border-top: 1.5px solid var(--fg); }
+.routes a { font-size: var(--t-h3); letter-spacing: -.02em; }
+
+/* ── Closing band ─────────────────────────────────────────────────────── */
+.closing { position: relative; overflow: hidden; margin-top: var(--s-9); }
+.closing__light { position: absolute; inset: 0; opacity: .75; }
+.closing__light .daylight__floor { display: none !important; }
+.closing__light:has(.photo) { opacity: 1; }
+.closing__light:has(.photo)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--ground-gold) 0 46%, color-mix(in srgb, var(--ground-gold) 72%, transparent) 70%, color-mix(in srgb, var(--ground-gold) 30%, transparent) 100%); }
+.closing__inner { position: relative; padding-block: var(--section); display: grid; gap: var(--s-7); }
+
+/* ── Not found ────────────────────────────────────────────────────────── */
+.notfound { min-height: 78vh; display: grid; align-content: center; gap: var(--s-6); padding-block: clamp(140px, 16vw, 220px) var(--s-9); }
+.notfound ul { display: flex; flex-wrap: wrap; gap: 12px 32px; font-size: var(--t-h3); }

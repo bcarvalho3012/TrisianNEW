@@ -1,0 +1,69 @@
+{
+  "note": "Photographs signed off for the site. Each entry is a file in src/assets/photos/, a fingerprint of its exact contents, and the date it was approved. Written by tools/photo-approve.mjs; do not edit by hand.",
+  "approved": {
+    "p01-morning-desk.jpg": {
+      "sha256": "64e9ea099dff51e1932efc616cfacbb0c42b48760d77461f67b7f3380a9e7246",
+      "on": "2026-11-15"
+    },
+    "p03-kitchen-table.jpg": {
+      "sha256": "a749f6ce3ec7eb96d7e4318a41488818f7d20e363d1dac7c851c5046a2619005",
+      "on": "2026-11-15"
+    },
+    "p04-office-floor.jpg": {
+      "sha256": "75c3757775194dc9c9172288ccee4dbce7ae1784da24efdb0b8cc4323db39ba4",
+      "on": "2026-11-15"
+    },
+    "p05-colleagues.jpg": {
+      "sha256": "466c0fbd7c8ad53bca1c535f38d2b14e4e12cf48f2094a12c6077615579ccdeb",
+      "on": "2026-11-15"
+    },
+    "p06-sign-out.jpg": {
+      "sha256": "649bb7dfb69ca6014f57789104956c8bd7ae172c0ed9bb473f80b9a4ed29b7c7",
+      "on": "2026-11-15"
+    },
+    "p07-night-office.jpg": {
+      "sha256": "c10cf60f7e2a58b60363ef8123b7bb6697b3e7fbad08fa3c28d271d74bff1a4c",
+      "on": "2026-11-15"
+    },
+    "p08-advisory-room.jpg": {
+      "sha256": "d60e047baea39420a101085da5fd02033aba476a89f1d4f14f0c9ca4a13feb0d",
+      "on": "2026-11-15"
+    },
+    "p09-front-office.jpg": {
+      "sha256": "237181e93fad00bc6919cdd1f7eea67a82d84f246912e826c2cd8f0a312adbe0",
+      "on": "2026-11-15"
+    },
+    "p10-law-office.jpg": {
+      "sha256": "04ba6ae4e5b1472363a4c6dd5544f8b2e38983bebade40a97a8568eba5623b9b",
+      "on": "2026-11-15"
+    },
+    "p11-shared-table.jpg": {
+      "sha256": "1d7ce477a3784db4da24688b653890999b62a4ea813ec4d621ca37b7b455b4f4",
+      "on": "2026-11-15"
+    },
+    "p12-desk-1998.jpg": {
+      "sha256": "021c87053b0be474f30f69f9b8315885f16bfbbbaef1ded2e6db333933bfed97",
+      "on": "2026-11-15"
+    },
+    "p13-desk-2010.jpg": {
+      "sha256": "01a77e2bcac8d9e32d2e02fe54d90e049d69464922779b336395f2ff819a0e0f",
+      "on": "2026-11-15"
+    },
+    "p14-desk-2024.jpg": {
+      "sha256": "0a17a5354d33d29cbf55aaab6c7d34275f73dfb470e3559fd1f75988e2babd0e",
+      "on": "2026-11-15"
+    },
+    "p16-dawn-desk.jpg": {
+      "sha256": "0d222bc47fbfcebf7fd034973e89d860dbda6c0d0f94ebc0db56b41f8cdc6aca",
+      "on": "2026-11-15"
+    },
+    "p17-first-light.jpg": {
+      "sha256": "7ec7c22d323b8d98d2357c1d527a7e702311d95114f3bc919272d77fb595691b",
+      "on": "2026-11-15"
+    },
+    "p18-desk-2010s.jpg": {
+      "sha256": "d05f3f7a4b348f178ebe5a5d5c50a21d5f137fc9fb3a1953b79eb1ba0eeb9a7d",
+      "on": "2026-11-15"
+    }
+  }
+}

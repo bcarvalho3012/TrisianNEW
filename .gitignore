@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# This repository is PUBLIC (GitHub Pages). Only the website and its tooling
+# may be committed. Everything below is internal and must never be pushed.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Working material that is not part of the website
+/brain/
+/source/
+/research/
+
+# Local agent / editor state
+/.claude/
+*.local.*
+
+# Build output and dependencies
+node_modules/
+dist/
+.astro/
+.cache/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/*
+!.vscode/extensions.json
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Photographs waiting for review: only approved, logged masters are tracked
+/site/src/assets/photos/incoming/
+
+# Licensed font files: kept out of the public repository until the license
+# terms for public hosting are confirmed (decision D14).
+/site/public/fonts/*.woff2
+# (the favicon and other public files are tracked; only the font files above are held back)
+!/site/public/

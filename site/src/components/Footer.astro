@@ -1,0 +1,43 @@
+---
+import { url } from '../lib/url';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="statement">
+      <p class="t-lede">Trisian builds and runs Safe Workspace, a managed cloud desktop service for organizations that have to defend their decisions. In business since 1998.</p>
+      <p class="signoff">Less noise. More proof.</p>
+    </div>
+    <nav aria-label="Safe Workspace">
+      <h2>Safe Workspace</h2>
+      <ul>
+        <li><a href={url('safe-workspace')}>How it works</a></li>
+        <li><a href={url('safe-workspace#scope')}>Managed Scope</a></li>
+        <li><a href={url('plans')}>Plans</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Who it’s for">
+      <h2>Who it’s for</h2>
+      <ul>
+        <li><a href={url('who-its-for/financial-services')}>Financial services</a></li>
+        <li><a href={url('who-its-for/healthcare')}>Healthcare</a></li>
+        <li><a href={url('who-its-for/legal')}>Legal</a></li>
+        <li><a href={url('who-its-for/growing-businesses')}>Growing businesses</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Trisian">
+      <h2>Trisian</h2>
+      <ul>
+        <li><a href={url('trust')}>Trust</a></li>
+        <li><a href="https://trust.trisian.com" rel="noopener">Trust Center</a></li>
+        <li><a href={url('company')}>Company</a></li>
+        <li><a href="mailto:contact@trisian.com">contact@trisian.com</a></li>
+      </ul>
+    </nav>
+    <div class="legal">
+      <p>© {year} All IT Host Inc. Trisian is the trading name of All IT Host Inc.</p>
+      <p>Microsoft, Azure, Microsoft 365 and Windows are trademarks of the Microsoft group of companies.</p>
+      <button type="button" class="link" data-motion-toggle aria-pressed="false">Pause motion</button>
+    </div>
+  </div>
+</footer>

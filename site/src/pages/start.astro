@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import '../styles/home.css';
+import '../styles/pages.css';
+import { startPage as c } from '../content/pages';
+---
+<Base title={c.title} description={c.description} current="start">
+  <PageHero eyebrow="Start with an assessment" lines={c.lines} ink={c.ink} after={c.after} lede={c.lede} statement />
+
+  <section class="band" data-ground="gold" aria-labelledby="how-h">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2" id="how-h">It starts with an assessment, <span class="ink">not a pitch</span>.</h2></div>
+      <div class="band__body">
+        <ul class="invoice">
+          {c.phases.map((p) => <li><strong>{p.name}</strong><span>{p.body}</span></li>)}
+        </ul>
+        <p class="t-small">{c.minimum}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The enquiry form is added when its endpoint exists (inside Trisian's own tenant). Until then: real routes only. -->
+  <section class="band" data-ground="gold" aria-labelledby="routes-h" style="padding-bottom: var(--section)">
+    <div class="wrap band__grid">
+      <div class="band__head"><h2 class="t-h2" id="routes-h">Write to us</h2></div>
+      <div class="band__body">
+        <ul class="routes">
+          <li><p class="t-label">To begin</p><p><a class="link" href="mailto:contact@trisian.com?subject=Starting%20with%20an%20assessment">contact@trisian.com</a></p></li>
+          <li><p class="t-label">A security question</p><p><a class="link" href="mailto:security@trisian.com">security@trisian.com</a></p></li>
+          <li><p class="t-label">Our security documents</p><p><a class="link" href="https://trust.trisian.com" rel="noopener">trust.trisian.com</a></p></li>
+        </ul>
+        <p class="t-small">Tell us roughly how many people you have and what you answer to. We read everything and reply ourselves.</p>
+      </div>
+    </div>
+  </section>
+</Base>

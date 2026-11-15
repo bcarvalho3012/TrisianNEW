@@ -1,0 +1,383 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import ProductWindow from '../components/ProductWindow.astro';
+import { eraSlot, erasReady, type SlotId } from '../lib/photos';
+import Stack from '../components/Stack.astro';
+import '../styles/home.css';
+import { url } from '../lib/url';
+import { hero, layers, built, scope, tuesday, proof, who, since, start } from '../content/home';
+import plans from '../data/plans.json';
+import scopeData from '../data/scope.json';
+
+// "Twenty-eight years of running IT. Sixteen of them in the cloud." — computed, never typed (BP §1.3).
+const ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+const words = (n: number) => (n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? '-' + ones[n % 10] : ''));
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const thisYear = new Date().getFullYear();
+const yearsInBusiness = cap(words(thisYear - 1998));
+const yearsInCloud = cap(words(thisYear - 2010));
+const stateMark: Record<string, string> = { in: '●', addon: '○', project: '◇', no: '—' };
+---
+<Base
+  title="Trisian — Safe Workspace, the managed cloud desktop service"
+  description="Trisian builds and runs Safe Workspace, a managed cloud desktop service: the desktop, Microsoft 365, security, monitoring, compliance controls and support, in your own cloud."
+>
+  <!-- 0 · Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero" data-ground="morning">
+    <div class="wrap hero__grid">
+      <div class="hero__media" data-enter="open">
+        <Photo slot="home-hero" sizes="(min-width: 901px) 42vw, 100vw" eager max={1600} />
+      </div>
+      <div class="hero__head">
+        <p class="t-label hero__eyebrow">{hero.eyebrow}</p>
+        <h1 class="t-display assemble">
+          {hero.lines.map((line, i) => <span class="line"><span style={`--i:${i}`}>{line}</span></span>)}
+          <span class="line"><span style={`--i:${hero.lines.length}`}><span class="ink" style={`--i:${hero.lines.length}`}>{hero.ink}</span>.</span></span>
+        </h1>
+      </div>
+      <div class="hero__body">
+        <p class="t-lede measure">{hero.lede}</p>
+        <div class="actions">
+          <a class="btn" href={url('start')}>Start with an assessment <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="link link--down" href="#window">See how it fits together <span class="arrow" aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <div class="hero__product">
+        <ProductWindow signin={hero.signin} />
+      </div>
+      <p class="hero__facts t-small">{hero.facts.map((f, i) => <>{i > 0 && <span aria-hidden="true"> · </span>}<span>{f}</span></>)}</p>
+    </div>
+  </section>
+
+  <!-- 1 · Through the window ───────────────────────────────────────────── -->
+  <section class="window movement" id="window" data-ground="morning" aria-labelledby="window-h">
+    <div class="wrap grid">
+      <div class="window__text">
+        <header class="window__head">
+          <p class="t-question" data-enter="rise">{layers.question}</p>
+          <h2 class="t-h1" id="window-h" data-enter="rise" style="--enter-delay:90ms">
+            {layers.heading.join(' ')} <span class="ink">{layers.ink}</span>.
+          </h2>
+          <p class="t-lede measure" data-enter="rise" style="--enter-delay:180ms">{layers.intro}</p>
+        </header>
+        <ol class="window__steps" data-steps>
+          {layers.items.map((item, i) => (
+            <li class="step" data-step={i}>
+              <h3 class="t-h2">{item.title}</h3>
+              <p class="t-lede">{item.body}</p>
+              <p class="t-small">{item.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="window__figure">
+        <div class="window__sticky">
+          <Stack />
+          <ol class="depth" aria-hidden="true">
+            {layers.items.map((item, i) => <li data-depth={i} class={i === 0 ? 'is-on' : ''}>{item.title}</li>)}
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="wrap window__close">
+      <p class="t-h1">{layers.closing[0]} <span class="ink">{layers.closing[1]}</span></p>
+      <p class="t-small">{layers.closingNote}</p>
+    </div>
+  </section>
+
+  <!-- 2 · Built around you ─────────────────────────────────────────────── -->
+  <section class="built movement" id="built" data-ground="noon" aria-labelledby="built-h">
+    <div class="wrap">
+      <h2 class="built__statement" id="built-h">
+        <span class="t-statement" data-statement>{built.statement}</span>
+        <span class="t-h1 built__rest">{built.rest} <span class="ink">{built.ink}</span>.</span>
+      </h2>
+      <div class="grid built__intro">
+        <p class="t-question">{built.question}</p>
+        <p class="t-lede">{built.intro}</p>
+      </div>
+
+      <div class="built__stage" data-plan-root data-plan="core">
+        <div class="callout callout--foundation" data-enter="rise">
+          <h3 class="t-h3">{built.steps[0].title}</h3>
+          <p>{built.steps[0].body}</p>
+          <fieldset class="switch">
+            <legend class="t-label">Choose a plan to see its level</legend>
+            {plans.plans.map((p, i) => (
+              <label><input type="radio" name="plan" value={p.id} checked={i === 0} /><span>{p.name}</span></label>
+            ))}
+          </fieldset>
+        </div>
+        <div class="callout callout--yours" data-enter="rise" style="--enter-delay:90ms">
+          <h3 class="t-h3">{built.steps[1].title}</h3>
+          <p>{built.steps[1].body}</p>
+        </div>
+        <div class="built__figure"><Stack compact /></div>
+        <div class="callout callout--shaped" data-enter="rise" style="--enter-delay:180ms">
+          <h3 class="t-h3">{built.steps[2].title}</h3>
+          <p>{built.steps[2].body}</p>
+        </div>
+        <div class="callout callout--supported" data-enter="rise" style="--enter-delay:270ms">
+          <h3 class="t-h3">{built.steps[3].title}</h3>
+          <p>{built.steps[3].body}</p>
+        </div>
+
+        <div class="plan" aria-live="polite">
+          {plans.plans.map((p) => (
+            <div class="plan__facts" data-plan-panel={p.id}>
+              <p class="t-h3">{p.name}. <span class="plan__line">{p.line}</span></p>
+              <p class="t-small">{p.license} · {p.users} · {p.support}</p>
+              <p class="t-small">{p.frameworks.length ? <>Controls that support {p.frameworks.join(', ')}{p.frameworksNote ? ` (${p.frameworksNote.toLowerCase()})` : ''}.</> : <>{p.frameworksNote}.</>}</p>
+            </div>
+          ))}
+          <table class="plan__table">
+            <caption class="sr-only">What changes with the plan</caption>
+            <thead><tr><th scope="col">What changes with the plan</th>{plans.plans.map((p) => <th scope="col" data-col={p.id}>{p.name}</th>)}</tr></thead>
+            <tbody>
+              {plans.rows.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  {plans.plans.map((p) => {
+                    const state = (row as Record<string, string>)[p.id];
+                    return <td data-col={p.id} data-state={state}><span class="mark" aria-hidden="true">{stateMark[state]}</span> {(plans.states as Record<string, string>)[state]}</td>;
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="t-small plan__notes">{built.notes.join(' ')} <a class="link" href={url('plans')}>Compare every line <span class="arrow" aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+
+      <div class="grid built__where">
+        <p class="t-question">{built.where.question}</p>
+        <div>
+          <p class="t-h2"><span class="ink">{built.where.answer}</span></p>
+          <p class="t-lede measure">{built.where.body}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Inside the scope ─────────────────────────────────────────────── -->
+  <section class="scope movement" id="scope" data-ground="morning" aria-labelledby="scope-h">
+    <div class="wrap">
+      <div class="grid scope__head">
+        <p class="t-question">{scope.question}</p>
+        <h2 class="t-h1" id="scope-h">{scope.heading.join(' ')} <span class="ink">{scope.ink}</span>. <span class="scope__after">{scope.after}</span></h2>
+      </div>
+
+      <table class="lineof" data-enter="draw">
+        <caption class="sr-only">The line of responsibility: what is ours and what is yours</caption>
+        <thead><tr><td></td><th scope="col">Ours</th><th scope="col">Yours</th></tr></thead>
+        <tbody>
+          {scope.line.map((row) => (
+            <tr><th scope="row" class="t-label">{row.area}</th><td class="t-h3 lineof__ours">{row.ours}</td><td class="t-h3 lineof__yours">{row.yours}</td></tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="grid scope__body">
+        <p class="t-h2 scope__principle"><span class="ink">{scope.principle}</span></p>
+        <div>
+          <p class="t-lede">{scope.body}</p>
+          <ul class="commitments">
+            {scope.commitments.map((c) => <li><strong>{c.lead}</strong> {c.body}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="explorer" data-explorer>
+        <p class="t-h3">{scope.explorerPrompt}</p>
+        <ul class="chips">
+          {scopeData.situations.map((s) => (
+            <li><button type="button" class="chip" data-situation={s.id} data-side={s.side} data-verdict={s.verdict} data-answer={s.answer} aria-pressed="false">{s.label}</button></li>
+          ))}
+        </ul>
+        <div class="explorer__field">
+          <div class="zone zone--inside" data-zone="inside">
+            <p class="t-label">Inside the Managed Scope</p>
+            <p class="zone__terms">an owner · a service level · a resolution path</p>
+            <ul data-placed="inside"></ul>
+          </div>
+          <div class="zone zone--outside" data-zone="outside">
+            <p class="t-label">Outside, defined in writing</p>
+            <ul data-placed="outside"></ul>
+          </div>
+        </div>
+        <p class="explorer__answer" aria-live="polite" data-answer><span class="t-small">Choose a situation to see where it lands.</span></p>
+        <!-- Still form: complete without script -->
+        <noscript>
+          <dl class="explorer__list">
+            {scopeData.situations.map((s) => <><dt>{s.label} <em>{s.verdict}</em></dt><dd>{s.answer}</dd></>)}
+          </dl>
+        </noscript>
+        <p class="t-small">{scope.qualifier} <a class="link" href={url('safe-workspace#scope')}>More about the scope <span class="arrow" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · A Tuesday ────────────────────────────────────────────────────── -->
+  <section class="tuesday" id="tuesday" aria-labelledby="tuesday-h">
+    <div class="wrap tuesday__head" data-ground="noon">
+      <h2 class="t-h1" id="tuesday-h">{tuesday.heading.join(' ')} <span class="ink">{tuesday.ink}</span>.</h2>
+      <p class="t-lede">{tuesday.intro}</p>
+    </div>
+    <ol class="beats">
+      {tuesday.beats.map((beat, i) => (
+        <li class="beat" data-ground={beat.ground} data-beat={beat.id}>
+          <div class="beat__photo" data-enter={i % 2 ? 'open-left' : 'open'}><Photo slot={`beat-${beat.id}` as SlotId} sizes="(min-width: 901px) 50vw, 100vw" /></div>
+          <div class="wrap beat__text" data-enter="rise">
+            <p class="t-label beat__time">{beat.time} · {beat.scene}</p>
+            {beat.question && <p class="t-question">{beat.question}</p>}
+            <p class="t-h2 beat__answer">{beat.answer}</p>
+            {beat.body && <p class="t-lede measure">{beat.body}</p>}
+            <div class="hosts ambient" style={`--n:${beat.hosts}`} role="img" aria-label="Illustration: session hosts in use at this time of day">
+              {Array.from({ length: 8 }).map((_, h) => <i class={h < beat.hosts ? 'is-on' : ''}></i>)}
+              <span class="hosts__pulse"></span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="wrap tuesday__close" data-ground="morning" data-enter="mark">
+      <p class="t-statement">Where <s>probably</s> stops, <span class="ink">Trisian starts</span>.</p>
+    </div>
+  </section>
+
+  <!-- 5 · In plain view ────────────────────────────────────────────────── -->
+  <section class="proof movement" id="proof" data-ground="morning" aria-labelledby="proof-h">
+    <div class="wrap">
+      <h2 class="t-statement proof__statement" id="proof-h">{proof.statement} <span class="ink">{proof.ink}</span></h2>
+      <p class="t-lede measure proof__intro">{proof.intro}</p>
+
+      {proof.exhibits.map((ex, i) => (
+        <article class:list={['exhibit', `exhibit--${ex.id}`]}>
+          <div class="exhibit__text" data-enter="rise">
+            <p class="t-label">{ex.title}</p>
+            <p class="t-question">{ex.question}</p>
+            <p class="t-h2"><span class="ink">{ex.answer}</span></p>
+            <p class="t-lede">{ex.body}</p>
+            {ex.note && <p class="t-small">{ex.note}</p>}
+            {ex.aside && <p class="exhibit__aside">{ex.aside}</p>}
+            <p class="exhibit__check"><strong>Check it:</strong> {ex.check} {ex.id === 'certified' && <a class="link" href="https://trust.trisian.com" rel="noopener">trust.trisian.com <span class="arrow" aria-hidden="true">→</span></a>}</p>
+          </div>
+          <div class="exhibit__figure" data-enter={i % 2 ? 'open-left' : 'open'}>
+            {ex.id === 'clean' && (
+              <div class="clean ambient" role="img" aria-label="Illustration: a desktop ends at sign-out; the next sign-in starts clean, and the profile follows.">
+                <div class="clean__desk clean__desk--old"><ProductWindow compact /></div>
+                <div class="clean__desk clean__desk--new"><ProductWindow compact /></div>
+                <span class="clean__profile">Your profile</span>
+              </div>
+            )}
+            {ex.id === 'passthrough' && (
+              <div class="mirror" data-mirror>
+                <label class="mirror__field"><span class="t-label">Type your monthly Azure bill</span>
+                  <span class="mirror__input"><span aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" data-mirror-input aria-describedby="mirror-note" /></span>
+                </label>
+                <div class="mirror__docs" aria-live="polite">
+                  <div class="doc"><p class="t-label">Your Azure subscription</p><p class="doc__total" data-mirror-out>$ ———</p></div>
+                  <p class="mirror__mid">Markup <strong>$0</strong></p>
+                  <div class="doc"><p class="t-label">Your invoice · Azure</p><p class="doc__total" data-mirror-out>$ ———</p></div>
+                </div>
+                <p class="t-small" id="mirror-note">This stays in your browser.</p>
+              </div>
+            )}
+            {ex.id === 'certified' && (
+              <table class="hold">
+                <caption class="sr-only">What Trisian holds, and what its controls support</caption>
+                <tbody>
+                  <tr><th scope="row" class="t-label">We hold</th><td class="t-h3">{proof.hold}</td></tr>
+                  {proof.support.map((s, k) => (
+                    <tr><th scope="row" class="t-label">{k === 0 ? 'Our controls support your obligations under' : ''}</th><td><span class="t-label">{s.plan}</span><span class="t-h3">{s.frameworks.join(' · ')}</span></td></tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </article>
+      ))}
+      <p class="t-small measure proof__qualifier">{proof.qualifier}</p>
+    </div>
+  </section>
+
+  <!-- 6 · Who it's for ─────────────────────────────────────────────────── -->
+  <section class="who movement" id="who" data-ground="noon" aria-labelledby="who-h">
+    <div class="wrap">
+      <h2 class="t-h1 who__h" id="who-h">{who.heading.join(' ')} <span class="ink">{who.ink}</span>.</h2>
+      <div class="grid who__intro">
+        <p class="t-question">{who.sub}</p>
+        <ul class="isthis">
+          {who.isThisYou.map((line) => <li>{line}</li>)}
+        </ul>
+      </div>
+    </div>
+    <ul class="doors" data-enter="doors">
+      {who.doors.map((door, k) => (
+        <li class="door" style={`--k:${k}`}>
+          <a href={url(`who-its-for/${door.id}`)}>
+            <div class="door__photo" style={`view-transition-name: door-${door.id}`}><Photo slot={`door-${door.id}` as SlotId} sizes="(min-width: 901px) 50vw, 100vw" decorative /></div>
+            <div class="door__text">
+              <p class="t-label">{door.name}</p>
+              <p class="t-h3 door__line">{door.line}</p>
+              <p class="t-small door__sub">{door.sub}</p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="wrap who__close">
+      <p class="t-h2">{who.open}</p>
+      <p class="t-question">{who.rule}</p>
+    </div>
+  </section>
+
+  <!-- 7 · Since 1998 ───────────────────────────────────────────────────── -->
+  <section class="since movement" id="since" data-ground="morning" aria-labelledby="since-h">
+    <div class="wrap">
+      <p class="since__year t-statement" aria-hidden="true" data-year data-enter="rise"><span>1998</span></p>
+      <h2 class="t-h1" id="since-h">{yearsInBusiness} years {since.heading} <span class="ink">{yearsInCloud} of them {since.ink}</span>.</h2>
+      <p class="t-lede measure">{since.intro}</p>
+    </div>
+    <div class="eras" role="region" aria-label="The company, era by era" tabindex="0" data-eras>
+      {since.eras.map((era) => (
+        <article class="era" data-era-year={era.year}>
+          <p class="era__year">{era.year}</p>
+          {erasReady && (
+            <div class="era__desk">
+              {eraSlot(era.year) ? <Photo slot={eraSlot(era.year)!} sizes="(min-width: 540px) 430px, 80vw" max={960} /> : <ProductWindow compact />}
+            </div>
+          )}
+          <h3 class="t-label">{era.name}</h3>
+          <p class="t-lede">{era.what}</p>
+          <p class="era__taught">{era.taught}</p>
+          <p class="t-small era__part">Became: {era.part}</p>
+        </article>
+      ))}
+    </div>
+    <div class="wrap">
+      <p class="t-h2 since__close measure">{since.closing}</p>
+    </div>
+  </section>
+
+  <!-- 8 · Start ────────────────────────────────────────────────────────── -->
+  <section class="start" id="start" data-ground="gold" aria-labelledby="start-h">
+    <div class="start__light" data-enter="open"><Photo slot="band-dawn" decorative /></div>
+    <div class="wrap start__inner">
+      <h2 class="t-statement" id="start-h">{start.lines.join(' ')} <span class="ink">{start.ink}</span> {start.after}</h2>
+      <div class="grid">
+        <p class="t-lede start__sub">{start.sub}</p>
+        <div class="start__how">
+          <p>{start.how}</p>
+          <div class="actions">
+            <a class="btn" href={url('start')}>Start with an assessment <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="link" href="mailto:contact@trisian.com">contact@trisian.com</a>
+          </div>
+        </div>
+      </div>
+      <p class="t-h2 start__signoff">{start.signoff}</p>
+    </div>
+  </section>
+</Base>
