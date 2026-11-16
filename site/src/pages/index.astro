@@ -104,12 +104,6 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
         <div class="callout callout--foundation" data-enter="rise">
           <h3 class="t-h3">{built.steps[0].title}</h3>
           <p>{built.steps[0].body}</p>
-          <fieldset class="switch">
-            <legend class="t-label">Choose a plan to see its level</legend>
-            {plans.plans.map((p, i) => (
-              <label><input type="radio" name="plan" value={p.id} checked={i === 0} /><span>{p.name}</span></label>
-            ))}
-          </fieldset>
         </div>
         <div class="callout callout--yours" data-enter="rise" style="--enter-delay:90ms">
           <h3 class="t-h3">{built.steps[1].title}</h3>
@@ -125,14 +119,24 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
           <p>{built.steps[3].body}</p>
         </div>
 
-        <div class="plan" aria-live="polite">
-          {plans.plans.map((p) => (
-            <div class="plan__facts" data-plan-panel={p.id}>
-              <p class="t-h3">{p.name}. <span class="plan__line">{p.line}</span></p>
-              <p class="t-small">{p.license} · {p.users} · {p.support}</p>
-              <p class="t-small">{p.frameworks.length ? <>Controls that support {p.frameworks.join(', ')}{p.frameworksNote ? ` (${p.frameworksNote.toLowerCase()})` : ''}.</> : <>{p.frameworksNote}.</>}</p>
+        <div class="plan">
+          <div class="plan__pick">
+            <fieldset class="switch">
+              <legend class="t-label">Choose a plan</legend>
+              {plans.plans.map((p, i) => (
+                <label><input type="radio" name="plan" value={p.id} checked={i === 0} /><span>{p.name}</span></label>
+              ))}
+            </fieldset>
+            <div class="plan__panels" aria-live="polite">
+              {plans.plans.map((p) => (
+                <div class="plan__facts" data-plan-panel={p.id}>
+                  <p class="t-h3">{p.name}. <span class="plan__line">{p.line}</span></p>
+                  <p class="t-small">{p.license} · {p.users} · {p.support}</p>
+                  <p class="t-small">{p.frameworks.length ? <>Controls that support {p.frameworks.join(', ')}{p.frameworksNote ? ` (${p.frameworksNote.toLowerCase()})` : ''}.</> : <>{p.frameworksNote}.</>}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
           <table class="plan__table">
             <caption class="sr-only">What changes with the plan</caption>
             <thead><tr><th scope="col">What changes with the plan</th>{plans.plans.map((p) => <th scope="col" data-col={p.id}>{p.name}</th>)}</tr></thead>

@@ -64,7 +64,7 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
 .callout--supported { grid-area: supported; }
 .callout p { color: var(--fg-2); }
 .built__figure { grid-area: figure; align-self: center; }
-.switch { border: 0; padding: 0; margin: var(--s-4) 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.switch { border: 0; padding: 0; margin: 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .switch legend { margin-bottom: 10px; padding: 0; }
 .switch label { position: relative; cursor: pointer; }
 .switch input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
@@ -72,11 +72,16 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
 .switch input:checked + span { background: var(--cobalt); color: #fff; box-shadow: inset 0 0 0 1.5px var(--cobalt); }
 .switch input:focus-visible + span { outline: 2px solid var(--bright); outline-offset: 3px; }
 .plan { grid-area: plan; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: clamp(24px, 5vw, 96px); row-gap: var(--s-5); padding-top: var(--s-7); border-top: 1px solid var(--rule); align-items: start; }
-.plan__facts { display: grid; gap: var(--s-3); grid-column: 1; grid-row: 1; }
+/* The switch sits on top of what it changes: the summary under it, and the column beside it.
+   The three summaries share one cell, so the cell is always as tall as the longest and nothing below moves. */
+.plan__pick { grid-column: 1; grid-row: 1; display: grid; gap: var(--s-5); align-content: start; min-width: 0; }
+.plan__panels { display: grid; }
+.plan__facts { grid-area: 1 / 1; display: grid; gap: var(--s-3); align-content: start; }
 .plan__line { font-weight: 300; }
 .built__stage[data-plan='core'] [data-plan-panel]:not([data-plan-panel='core']),
 .built__stage[data-plan='advanced'] [data-plan-panel]:not([data-plan-panel='advanced']),
-.built__stage[data-plan='enterprise'] [data-plan-panel]:not([data-plan-panel='enterprise']) { display: none; }
+.built__stage[data-plan='enterprise'] [data-plan-panel]:not([data-plan-panel='enterprise']) { visibility: hidden; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { .plan__facts { transition: opacity var(--d-2) var(--ease); } }
 .plan__table { grid-column: 2; grid-row: 1; font-size: var(--t-small); }
 .plan__table th, .plan__table td { text-align: left; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); font-weight: 400; vertical-align: top; }
 .plan__table thead th { font-size: var(--t-label); font-weight: 500; color: var(--fg-3); }
@@ -92,7 +97,7 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
   .built__stage { grid-template-columns: 1fr; grid-template-areas: 'foundation' 'figure' 'yours' 'shaped' 'supported' 'plan'; }
   .built__figure { max-width: 460px; }
   .plan { grid-template-columns: 1fr; }
-  .plan__table, .plan__facts { grid-column: 1; grid-row: auto; }
+  .plan__table, .plan__pick { grid-column: 1; grid-row: auto; }
   .plan__table td { white-space: normal; }
   .built__intro .t-question, .built__intro .t-lede, .built__where .t-question, .built__where > div { grid-column: 1 / -1; }
 }
