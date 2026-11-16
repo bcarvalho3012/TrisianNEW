@@ -105,6 +105,9 @@
 .facts li:first-child { border-top: 1.5px solid var(--fg); }
 
 /* ── Trust; Company ───────────────────────────────────────────────────── */
+/* Company · how we work: the question in the margin, the answer at full voice beside it, on one baseline. */
+.ownway { align-items: baseline; }
+.ownway__line { margin-bottom: var(--s-4); }
 .mission { font-size: var(--t-h2); font-weight: 300; letter-spacing: -.03em; line-height: 1.12; max-width: 22em; text-wrap: balance; }
 .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); margin-top: var(--s-8); }
 .pillars li { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }

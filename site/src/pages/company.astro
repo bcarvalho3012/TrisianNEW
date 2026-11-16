@@ -47,10 +47,11 @@ import { since } from '../content/home';
   </section>
 
   <section class="band" data-ground="morning" aria-labelledby="people-h">
-    <div class="wrap band__grid">
-      <div class="band__head"><h2 class="t-h2" id="people-h">How we work</h2></div>
+    <div class="wrap band__grid ownway">
+      <div class="band__head"><p class="t-question">{c.work.question}</p></div>
       <div class="band__body">
-        <p class="t-lede">{c.people}</p>
+        <h2 class="t-h2 ownway__line" id="people-h">{c.work.lead} <span class="ink">{c.work.ink}</span>.</h2>
+        <p class="t-lede">{c.work.body}</p>
         <p class="t-lede">{c.oneBrand}</p>
       </div>
     </div>
