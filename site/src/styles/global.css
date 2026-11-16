@@ -212,7 +212,5 @@ strong, b { font-weight: 600; }
 .assemble.is-done .ink { animation: none !important; background: none !important; -webkit-text-fill-color: currentColor; color: var(--accent) !important; font-weight: 600 !important; }
 .pw.is-done * { animation: none !important; }
 
-html.motion-paused .ambient, html.motion-paused .ambient *, html.motion-paused .ambient *::before, html.motion-paused .ambient *::after { animation-play-state: paused !important; }
-
 /* Cross-document page transitions where supported */
 @media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }
