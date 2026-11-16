@@ -141,21 +141,4 @@ $$<HTMLElement>('[data-explorer]').forEach((ex) => {
   });
 });
 
-/* ── Since 1998: the year follows the era in view ──────────────────────── */
-const eras = $<HTMLElement>('[data-eras]');
-const year = $<HTMLElement>('[data-year]');
-if (eras && year && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (!e.isIntersecting) continue;
-      const next = ((e.target as HTMLElement).dataset.eraYear || '').slice(0, 4);
-      const span = year.firstElementChild as HTMLElement | null;
-      if (!span || span.textContent === next) continue;
-      span.textContent = next;
-      year.classList.remove('is-rolling'); void year.offsetWidth; year.classList.add('is-rolling');
-    }
-  }, { root: eras, rootMargin: '0px -55% 0px 0px', threshold: 0.5 });
-  $$<HTMLElement>('[data-era-year]', eras).forEach((el) => io.observe(el));
-}
-
 export {};

@@ -273,18 +273,14 @@ body[data-tone='night'] .link { color: var(--sky); }
   .isthis { columns: 1; }
 }
 
-/* ── 7 · Since 1998: the year rolls, the eras pass ────────────────────── */
+/* ── 7 · Since 1998 ───────────────────────────────────────────────────── */
 /* On the home page: two sentences, one above the other, and the way to the rest of it. */
 .years__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); align-items: end; align-items: last baseline; }
 .years__h { grid-column: 1 / span 9; text-wrap: wrap; }
 .years__more { grid-column: 10 / -1; justify-self: end; font-size: var(--t-lede); }
 @media (max-width: 900px) { .years__h, .years__more { grid-column: 1 / -1; justify-self: start; } }
-/* On the company page: the year, the eras, and what each one left behind. */
+/* On the company page: the eras, each with its own year, and what each one left behind. */
 .since .wrap { display: grid; gap: var(--s-5); }
-.since__year { color: var(--accent); font-variant-numeric: tabular-nums; line-height: .86; margin-bottom: var(--s-4); overflow: hidden; }
-.since__year span { display: inline-block; }
-@media (prefers-reduced-motion: no-preference) { .since__year.is-rolling span { animation: year-roll 520ms var(--ease); } @keyframes year-roll { from { transform: translateY(42%); opacity: .15; } } }
-.since .t-h1 { max-width: 15em; }
 .eras { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin); padding: var(--s-9) var(--margin) var(--s-6); scrollbar-width: thin; }
 .era { flex: 0 0 min(80vw, 430px); scroll-snap-align: start; display: grid; gap: var(--s-4); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }
 .era__year { font-size: var(--t-h1); font-weight: 300; letter-spacing: -.035em; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }

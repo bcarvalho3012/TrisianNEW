@@ -200,7 +200,7 @@ strong, b { font-weight: 600; }
 
   /* A statement arrives large and settles as the page moves (where the browser can tie animation to scroll). */
   @supports (animation-timeline: view()) {
-    .t-statement:not(.assemble):not([data-year]) { transform-origin: left center; animation: settle-statement linear both; animation-timeline: view(); animation-range: entry 0% cover 34%; }
+    .t-statement:not(.assemble) { transform-origin: left center; animation: settle-statement linear both; animation-timeline: view(); animation-range: entry 0% cover 34%; }
     @keyframes settle-statement { from { transform: translateY(18%) scale(1.07); opacity: .25; } to { transform: none; opacity: 1; } }
   }
 }
