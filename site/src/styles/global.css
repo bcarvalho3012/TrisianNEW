@@ -89,10 +89,21 @@ strong, b { font-weight: 600; }
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 50; height: 84px;
   display: flex; align-items: center;
-  transition: height var(--d-2) var(--ease), background-color var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease);
+  transition: height var(--d-2) var(--ease);
 }
-.site-header.is-condensed { height: 64px; background: color-mix(in srgb, var(--ground) 92%, transparent); box-shadow: 0 1px 0 color-mix(in srgb, var(--fg) 10%, transparent); }
-@supports (backdrop-filter: blur(1px)) { .site-header.is-condensed { background: color-mix(in srgb, var(--ground) 82%, transparent); backdrop-filter: saturate(140%) blur(14px); } }
+/* The frosted bar is a layer of its own, never the header itself. A backdrop-filter on the header makes the
+   header the containing block of anything fixed inside it, and the phone menu is a fixed sheet inside it:
+   once the page had been scrolled the sheet shrank to the height of the bar and its links left the screen. */
+.site-header::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+  background: color-mix(in srgb, var(--ground) 92%, transparent); box-shadow: 0 1px 0 color-mix(in srgb, var(--fg) 10%, transparent);
+  transition: opacity var(--d-2) var(--ease), background-color var(--d-2) var(--ease);
+}
+.site-header.is-condensed { height: 64px; }
+.site-header.is-condensed::before { opacity: 1; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header::before { background: color-mix(in srgb, var(--ground) 82%, transparent); -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px); }
+}
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .wordmark { display: block; line-height: 0; padding-block: 9px; }
 .wordmark img { height: 22px; width: auto; }
@@ -112,14 +123,33 @@ strong, b { font-weight: 600; }
 @media (max-width: 900px) {
   .site-header { height: 68px; }
   .nav-toggle { display: inline-flex; align-items: center; position: relative; z-index: 2; min-height: 44px; padding: 0 16px; border: 0; border-radius: var(--r-control); background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; font-weight: 500; cursor: pointer; }
-  /* The menu is a sheet of morning light that rises from the foot of the screen. */
-  .site-nav { position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 4px; padding: 96px var(--margin) 40px; background: var(--ground-morning); color: var(--ink); transform: translateY(100%); visibility: hidden; transition: transform var(--d-3) var(--ease), visibility 0s linear var(--d-3); }
+  /* The menu is a sheet of morning light that rises from the foot of the screen. Its links sit at the foot.
+     If they do not fit (a very small phone) the sheet scrolls, so the first link can always be reached. */
+  .site-nav { position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px; padding: 0 var(--margin) max(40px, calc(env(safe-area-inset-bottom) + 24px)); overflow: hidden auto; overscroll-behavior: contain; background: var(--ground-morning); color: var(--ink); transform: translateY(100%); visibility: hidden; transition: transform var(--d-3) var(--ease), visibility 0s linear var(--d-3); }
+  /* A strip of the sheet's own ground stays under the wordmark and the Close button, so links that scroll
+     never run beneath them. */
+  .site-nav::before { content: ''; position: sticky; top: 0; z-index: 1; flex: 0 0 68px; align-self: stretch; margin: 0 calc(-1 * var(--margin)) 28px; background: var(--ground-morning); }
+  .site-nav > * { flex-shrink: 0; }
+  .site-nav > :first-child { margin-top: auto; }
   .site-header.is-open .site-nav { transform: none; visibility: visible; transition: transform var(--d-3) var(--ease), visibility 0s; }
   .site-header.is-open { color: var(--ink); }
   .site-header.is-open .wordmark { position: relative; z-index: 2; }
   .site-header.is-open .wordmark img { filter: none; }
   .site-nav a:not(.btn) { font-size: var(--t-h1); font-weight: 300; letter-spacing: -.035em; line-height: 1.15; padding: 4px 0; color: var(--ink); }
   .site-nav .btn { margin-top: 28px; min-height: 52px; }
+}
+/* A phone on its side: two columns of three, at a smaller size, so the whole menu fits without scrolling. */
+@media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
+  .site-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 68px minmax(0, 1fr) repeat(3, auto); column-gap: var(--gutter); row-gap: 0; align-items: center; justify-items: start; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+  .site-nav::before { grid-column: 1 / -1; grid-row: 1; justify-self: stretch; align-self: stretch; margin-bottom: 0; }
+  .site-nav > :first-child { margin-top: 0; }
+  .site-nav > a:nth-child(-n+3) { grid-column: 1; }
+  .site-nav > a:nth-child(n+4) { grid-column: 2; }
+  .site-nav > a:nth-child(3n+1) { grid-row: 3; }
+  .site-nav > a:nth-child(3n+2) { grid-row: 4; }
+  .site-nav > a:nth-child(3n) { grid-row: 5; }
+  .site-nav a:not(.btn) { font-size: min(var(--t-h2), 5.6vw); }
+  .site-nav .btn { margin-top: 0; }
 }
 
 /* ── Footer ───────────────────────────────────────────────────────────── */

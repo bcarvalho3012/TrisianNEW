@@ -19,15 +19,22 @@ window.setTimeout(() => $$('.pw').forEach((el) => el.classList.add('is-done')), 
 
 /* ── The menu sheet (narrow screens) ───────────────────────────────────── */
 const navToggle = $<HTMLButtonElement>('[data-nav-toggle]');
+const behindMenu = $$<HTMLElement>('main, body > footer');
 const setMenu = (open: boolean) => {
   header?.classList.toggle('is-open', open);
   navToggle?.setAttribute('aria-expanded', String(open));
   if (navToggle) navToggle.textContent = open ? 'Close' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
+  // While the sheet is up, the page behind it takes no focus and no taps.
+  behindMenu.forEach((el) => { el.inert = open; });
 };
 navToggle?.addEventListener('click', () => setMenu(!header?.classList.contains('is-open')));
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && header?.classList.contains('is-open')) { setMenu(false); navToggle?.focus(); } });
 $$<HTMLAnchorElement>('.site-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+// The sheet belongs to the narrow layout. Turning a tablet on its side, or coming back to a page the browser
+// kept in memory, must never leave it open with the page locked behind it.
+window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
+window.addEventListener('pageshow', (e) => { if (e.persisted) setMenu(false); });
 
 /* ── Entrances: armed by html.js, released when seen, and by a failsafe ── */
 const enters = $$<HTMLElement>('[data-enter]');
