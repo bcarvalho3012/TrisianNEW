@@ -263,6 +263,12 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
 }
 
 /* ── 7 · Since 1998: the year rolls, the eras pass ────────────────────── */
+/* On the home page: two sentences, one above the other, and the way to the rest of it. */
+.years__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); align-items: end; align-items: last baseline; }
+.years__h { grid-column: 1 / span 9; text-wrap: wrap; }
+.years__more { grid-column: 10 / -1; justify-self: end; font-size: var(--t-lede); }
+@media (max-width: 900px) { .years__h, .years__more { grid-column: 1 / -1; justify-self: start; } }
+/* On the company page: the year, the eras, and what each one left behind. */
 .since .wrap { display: grid; gap: var(--s-5); }
 .since__year { color: var(--accent); font-variant-numeric: tabular-nums; line-height: .86; margin-bottom: var(--s-4); overflow: hidden; }
 .since__year span { display: inline-block; }
@@ -275,7 +281,6 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
 .era__desk .pw { width: 78%; }
 .era__taught { font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; line-height: 1.25; }
 .era__part { padding-top: var(--s-4); border-top: 1px solid var(--rule); }
-.since__close { margin-top: var(--s-7); }
 
 /* ── 8 · Start: dawn ──────────────────────────────────────────────────── */
 .start { position: relative; overflow: hidden; min-height: 96vh; display: grid; align-items: end; }

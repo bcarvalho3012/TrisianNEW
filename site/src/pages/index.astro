@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Invoice from '../components/Invoice.astro';
 import Photo from '../components/Photo.astro';
 import ProductWindow from '../components/ProductWindow.astro';
-import { eraSlot, erasReady, type SlotId } from '../lib/photos';
+import type { SlotId } from '../lib/photos';
 import Stack from '../components/Stack.astro';
 import '../styles/home.css';
 import { url } from '../lib/url';
@@ -326,30 +326,13 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
   </section>
 
   <!-- 7 · Since 1998 ───────────────────────────────────────────────────── -->
-  <section class="since movement" id="since" data-ground="morning" aria-labelledby="since-h">
-    <div class="wrap">
-      <p class="since__year t-statement" aria-hidden="true" data-year data-enter="rise"><span>1998</span></p>
-      <h2 class="t-h1" id="since-h">{yearsInBusiness} years {since.heading} <span class="ink">{yearsInCloud} of them {since.ink}</span>.</h2>
-      <p class="t-lede measure">{since.intro}</p>
-    </div>
-    <div class="eras" role="region" aria-label="The company, era by era" tabindex="0" data-eras>
-      {since.eras.map((era) => (
-        <article class="era" data-era-year={era.year}>
-          <p class="era__year">{era.year}</p>
-          {erasReady && (
-            <div class="era__desk">
-              {eraSlot(era.year) ? <Photo slot={eraSlot(era.year)!} sizes="(min-width: 540px) 430px, 80vw" max={960} /> : <ProductWindow compact />}
-            </div>
-          )}
-          <h3 class="t-label">{era.name}</h3>
-          <p class="t-lede">{era.what}</p>
-          <p class="era__taught">{era.taught}</p>
-          <p class="t-small era__part">Became: {era.part}</p>
-        </article>
-      ))}
-    </div>
-    <div class="wrap">
-      <p class="t-h2 since__close measure">{since.closing}</p>
+  <section class="years movement" id="since" data-ground="morning" aria-labelledby="since-h">
+    <div class="wrap years__in">
+      <h2 class="t-h2 years__h" id="since-h">
+        <span class="line">{yearsInBusiness} years {since.heading}</span>
+        <span class="line"><span class="ink">{yearsInCloud} of them {since.ink}</span>.</span>
+      </h2>
+      <p class="years__more"><a class="link" href={url('company')}>{since.more} <span class="arrow" aria-hidden="true">→</span></a></p>
     </div>
   </section>
 

@@ -195,7 +195,7 @@ export const companyPage = {
     { name: 'Performance', line: 'The workspace runs well every day and grows with you.', truth: ['BP §1.4'] },
     { name: 'Compliance', line: 'What can be proven about the first two.', truth: ['BP §1.4'] },
   ],
-  people: 'We have no office and no datacenter of our own. Everyone at Trisian works inside the same managed cloud model we build for our clients.',
+  people: 'We have no office and no datacenter of our own. Trisian runs on the same managed cloud model it sells.',
   peopleTruth: ['BP §3.1'],
   oneBrand: 'Trisian is one brand with one product. Everything we offer relates to Safe Workspace.',
   oneBrandTruth: ['BP §1.2'],
