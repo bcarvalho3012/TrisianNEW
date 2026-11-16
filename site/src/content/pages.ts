@@ -64,13 +64,21 @@ export const plansPage = {
     question: 'What’s on the invoice?',
     answer: 'Four things.',
     truth: ['BP §8.1', 'BP §8.4', 'BP §8.5'],
+    // The invoice figure, on Home and on Plans, is drawn from this one block.
+    title: 'Your monthly invoice',
+    oursLabel: 'What you pay us for',
     items: [
       { name: 'The platform fee', body: 'Per user, per month. Everything automated at your plan.', truth: ['BP §8.1'] },
       { name: 'Support hours', body: 'For the work that needs a person.', truth: ['BP §8.1'] },
       { name: 'Projects', body: 'Quoted before they begin.', truth: ['BP §8.1'] },
       { name: 'Add-ons', body: 'If you want them.', truth: ['BP §8.1'] },
     ],
-    passthrough: 'And two things passed through, no markup: Azure, at exactly what your subscription shows, and your Microsoft 365 licenses.',
+    throughLabel: 'Passed through',
+    through: [
+      { name: 'Azure', body: 'Exactly what your subscription shows.', truth: ['BP §8.4'] },
+      { name: 'Microsoft 365 licenses', body: 'Passed through the same way.', truth: ['BP §8.5'] },
+    ],
+    total: { label: 'Markup', value: '$0' },
   },
   around: {
     heading: 'Around the platform',

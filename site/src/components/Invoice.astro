@@ -1,0 +1,67 @@
+---
+// The monthly invoice, drawn: what the client pays for running the workspace, and the two things that
+// only pass through. The pass-through lines are strips threaded through the sheet, sticking out at both
+// sides, so the idea is visible before a word is read. No amounts are shown.
+import { plansPage } from '../content/pages';
+interface Props { class?: string; }
+const { class: cls = '' } = Astro.props;
+const inv = plansPage.invoice;
+const id = `inv-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class:list={['inv-fig', cls]} aria-labelledby={id}>
+  <div class="inv">
+    <p class="t-label inv__title" id={id}>{inv.title}</p>
+
+    <p class="t-label inv__group">{inv.oursLabel}</p>
+    <ul class="inv__rows">
+      {inv.items.map((item) => (
+        <li><span class="inv__name">{item.name}</span><span class="inv__what">{item.body}</span></li>
+      ))}
+    </ul>
+
+    <p class="t-label inv__group inv__group--through">{inv.throughLabel}</p>
+    <ul class="inv__rows inv__rows--through">
+      {inv.through.map((item, k) => (
+        <li style={`--k:${k}`}><span class="inv__name">{item.name}</span><span class="inv__what">{item.body}</span></li>
+      ))}
+    </ul>
+
+    <p class="inv__total"><span>{inv.total.label}</span><strong>{inv.total.value}</strong></p>
+  </div>
+</figure>
+
+<style>
+  /* The room around the sheet is part of the figure: the strips reach into it. */
+  .inv-fig { --pad: clamp(20px, 2.6vw, 36px); --out: clamp(10px, 1.6vw, 22px); margin: 0; padding: var(--s-4) var(--out) var(--s-5); container-type: inline-size; }
+  .inv { position: relative; background: var(--ground-noon); color: var(--ink); border-radius: var(--r-inset); box-shadow: var(--shadow-sheet); padding: var(--pad); padding-top: calc(var(--pad) - 4px); }
+  .inv__title { color: var(--ink-2); padding-bottom: var(--s-4); border-bottom: 1.5px solid var(--ink); }
+  .inv__group { color: var(--ink-3); margin-top: var(--s-5); margin-bottom: var(--s-2); }
+  .inv__group--through { color: var(--cobalt); }
+
+  .inv__rows { list-style: none; margin: 0; padding: 0; }
+  .inv__rows li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--s-5); align-items: baseline; padding-block: 11px; border-top: 1px solid var(--rule); }
+  .inv__rows li:first-child { border-top: 0; }
+  .inv__name { font-weight: 500; letter-spacing: -.01em; }
+  .inv__what { font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); }
+
+  /* The two that pass through: strips that enter on one side of the sheet and leave on the other. */
+  .inv__rows--through { display: grid; gap: 8px; }
+  .inv__rows--through li { border-top: 0; margin-inline: calc(-1 * (var(--pad) + var(--out))); padding: 14px calc(var(--pad) + var(--out)); background: var(--tint-1); border-radius: 10px; box-shadow: 0 1px 0 color-mix(in srgb, var(--cobalt) 14%, transparent); }
+  .inv__rows--through .inv__name { color: var(--cobalt-deep); }
+  .inv__rows--through .inv__what { color: var(--ink); }
+
+  /* The answer belongs to the two strips above it, so it is set in their color, close under them, with no rule between. */
+  .inv__total { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-5); margin-top: var(--s-5); }
+  .inv__total span { font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; color: var(--cobalt-deep); }
+  .inv__total strong { font-size: var(--t-h1); font-weight: 600; letter-spacing: -.04em; line-height: .9; color: var(--cobalt); font-variant-numeric: tabular-nums; }
+
+  @container (max-width: 460px) {
+    .inv__rows li { grid-template-columns: minmax(0, 1fr); row-gap: 2px; }
+  }
+
+  /* Entrance: the sheet is there first; then each strip is drawn through it, in reading order. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js [data-enter]:not(.is-in)) .inv__rows--through li { opacity: 0; transform: translateX(-9%); }
+    :global(.js [data-enter].is-in) .inv__rows--through li { opacity: 1; transform: none; transition: transform var(--d-4) var(--ease) calc(var(--k, 0) * 140ms + 520ms), opacity var(--d-2) var(--ease) calc(var(--k, 0) * 140ms + 520ms); }
+  }
+</style>

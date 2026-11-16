@@ -134,18 +134,6 @@ $$<HTMLElement>('[data-explorer]').forEach((ex) => {
   });
 });
 
-/* ── Two numbers that never differ ─────────────────────────────────────── */
-$$<HTMLElement>('[data-mirror]').forEach((mirror) => {
-  const input = $<HTMLInputElement>('[data-mirror-input]', mirror);
-  const outs = $$<HTMLElement>('[data-mirror-out]', mirror);
-  const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-  input?.addEventListener('input', () => {
-    const n = Number(input.value.replace(/[^0-9.]/g, ''));
-    const text = input.value.trim() && Number.isFinite(n) ? fmt.format(n) : '$ ———';
-    outs.forEach((o) => (o.textContent = text));
-  });
-});
-
 /* ── Since 1998: the year follows the era in view ──────────────────────── */
 const eras = $<HTMLElement>('[data-eras]');
 const year = $<HTMLElement>('[data-year]');

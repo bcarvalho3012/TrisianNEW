@@ -198,16 +198,6 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
   @keyframes arrive { 0%, 40% { opacity: 0; transform: translateY(14px); } 58%, 100% { opacity: 1; transform: none; } }
   @keyframes follow { 0%, 30% { left: 8%; top: 22%; } 60%, 100% { left: 52%; top: 62%; } }
 }
-.mirror { display: grid; gap: var(--s-5); }
-.mirror__field { display: grid; gap: 10px; max-width: 320px; }
-.mirror__input { display: flex; align-items: center; gap: 8px; height: 60px; padding: 0 18px; border-radius: var(--r-control); background: var(--ground-noon); box-shadow: inset 0 0 0 1.5px var(--control-border); font-size: var(--t-h3); transition: box-shadow var(--d-1) var(--ease); }
-.mirror__input:focus-within { box-shadow: inset 0 0 0 2px var(--cobalt); }
-.mirror__input input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; color: inherit; outline: none; font-variant-numeric: tabular-nums; }
-.mirror__docs { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s-4); }
-.doc { background: var(--ground-noon); border-radius: var(--r-inset); box-shadow: var(--shadow-sheet); padding: var(--s-5); display: grid; gap: var(--s-4); min-width: 0; }
-.doc__total { font-size: var(--t-h2); font-weight: 300; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.mirror__mid { text-align: center; font-size: var(--t-small); color: var(--fg-2); }
-.mirror__mid strong { display: block; font-size: var(--t-h3); color: var(--accent); }
 .hold th, .hold td { text-align: left; vertical-align: top; padding: var(--s-5) 0; border-top: 1px solid var(--rule); }
 .hold tr:first-child th, .hold tr:first-child td { border-top: 1.5px solid var(--fg); }
 .hold th { width: 34%; padding-right: var(--s-5); padding-top: calc(var(--s-5) + .35em); }
@@ -218,7 +208,6 @@ body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); }
 .proof__qualifier { margin-top: var(--s-7); }
 @media (max-width: 900px) {
   .exhibit__text, .exhibit__figure, .exhibit:nth-of-type(even) .exhibit__text, .exhibit:nth-of-type(even) .exhibit__figure { grid-column: 1 / -1; grid-row: auto; }
-  .mirror__docs { grid-template-columns: 1fr; }
 }
 
 /* ── 6 · Who it's for: four doors ─────────────────────────────────────── */

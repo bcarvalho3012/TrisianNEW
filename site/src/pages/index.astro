@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Invoice from '../components/Invoice.astro';
 import Photo from '../components/Photo.astro';
 import ProductWindow from '../components/ProductWindow.astro';
 import { eraSlot, erasReady, type SlotId } from '../lib/photos';
@@ -273,17 +274,7 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
               </div>
             )}
             {ex.id === 'passthrough' && (
-              <div class="mirror" data-mirror>
-                <label class="mirror__field"><span class="t-label">Type your monthly Azure bill</span>
-                  <span class="mirror__input"><span aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" data-mirror-input aria-describedby="mirror-note" /></span>
-                </label>
-                <div class="mirror__docs" aria-live="polite">
-                  <div class="doc"><p class="t-label">Your Azure subscription</p><p class="doc__total" data-mirror-out>$ ———</p></div>
-                  <p class="mirror__mid">Markup <strong>$0</strong></p>
-                  <div class="doc"><p class="t-label">Your invoice · Azure</p><p class="doc__total" data-mirror-out>$ ———</p></div>
-                </div>
-                <p class="t-small" id="mirror-note">This stays in your browser.</p>
-              </div>
+              <Invoice />
             )}
             {ex.id === 'certified' && (
               <table class="hold">
