@@ -212,6 +212,9 @@ export const startPage = {
   phases: [
     { name: 'First, a qualification', body: 'A conversation, and a qualification report. Free for every qualified organization.', truth: ['BP §6.4'] },
     { name: 'Then, a deep dive', body: 'A strategic assessment of where you stand on security, performance and compliance, with the plan we recommend, the gaps to close and a formal proposal. It is paid, and credited against your first invoice if you sign.', truth: ['BP §6.4'] },
+    // What comes after the proposal: the page used to stop there.
+    { name: 'Then, the build', body: 'Building your workspace is a project: scoped, quoted and finished.', truth: ['BP §6.2', '01 §20'] },
+    { name: 'From then on, Safe Workspace', body: 'We support what we built, inside a scope agreed in writing.', truth: ['BP §3.2', 'BP §4.2', '01 §20.9'] },
   ],
   minimum: 'Safe Workspace starts at 50 users. Fewer than that? Write anyway, and we’ll point you somewhere useful.',
   minimumTruth: ['BP §5.1'],

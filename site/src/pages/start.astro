@@ -12,9 +12,9 @@ import { startPage as c } from '../content/pages';
     <div class="wrap band__grid">
       <div class="band__head"><h2 class="t-h2" id="how-h">It starts with an assessment, <span class="ink">not a pitch</span>.</h2></div>
       <div class="band__body">
-        <ul class="invoice">
+        <ol class="invoice">
           {c.phases.map((p) => <li><strong>{p.name}</strong><span>{p.body}</span></li>)}
-        </ul>
+        </ol>
         <p class="t-small">{c.minimum}</p>
       </div>
     </div>
