@@ -17,11 +17,24 @@ body[data-tone='night'] .link { color: var(--sky); }
 @media (max-width: 900px) {
   .hero { padding-top: 104px; }
   .hero__head, .hero__body, .hero__facts { grid-column: 1 / -1; grid-row: auto; }
-  .hero__media { grid-column: 1 / -1; grid-row: auto; margin: 0 calc(var(--margin) * -1); aspect-ratio: 5 / 4; border-radius: 0; order: 2; }
+  /* On a phone the words come first: headline, what we do, the button. Then the pictures. */
   .hero__head { order: 1; }
-  .hero__product { grid-column: 2 / -1; grid-row: auto; order: 3; margin-top: -36%; margin-bottom: 0; }
-  .hero__body { order: 4; }
+  .hero__body { order: 2; }
+  .hero__media { grid-column: 1 / -1; grid-row: auto; margin: 0 calc(var(--margin) * -1); aspect-ratio: 5 / 4; border-radius: 0; order: 3; }
+  .hero__product { grid-column: 2 / -1; grid-row: auto; order: 4; margin-top: -36%; margin-bottom: 0; }
   .hero__facts { order: 5; }
+}
+/* A short, wide screen (most laptops): the headline and the space above it ease down with the height of
+   the screen, so the paragraph and the button are on the first screen. */
+@media (min-width: 901px) and (max-height: 860px) {
+  .hero { padding-top: clamp(96px, 14vh, 112px); }
+  .hero .t-display { font-size: min(var(--t-display), 12.2vh); }
+  /* The tall photograph spans all three rows; the last row takes up its extra height, so the headline and
+     the paragraph stay as close together as their own content allows. */
+  .hero__grid { row-gap: 22px; grid-template-rows: auto auto 1fr; }
+  .hero__body { gap: var(--s-5); }
+  /* With less space above, the photograph must not climb up behind the navigation. */
+  .hero__media { margin-top: -8px; }
 }
 
 /* ── 1 · Through the window: a sticky figure, six steps scrolling past ── */
@@ -39,6 +52,8 @@ body[data-tone='night'] .link { color: var(--sky); }
 .depth li.is-on::before { transform: scaleX(1); }
 .window__close { margin-top: var(--s-10); display: grid; gap: var(--s-4); }
 .window__close .t-h1 { max-width: 14em; }
+/* The answer keeps to a line of its own, so "One name on the outcome." is never split after "One". */
+.window__close .ink { display: block; }
 @media (max-width: 900px) {
   .window__text { display: contents; }
   .window__head, .window__steps, .window__figure { grid-column: 1 / -1; }
@@ -90,7 +105,7 @@ body[data-tone='night'] .link { color: var(--sky); }
 .plan__table .mark { display: inline-block; width: 1.1em; color: inherit; }
 .built__stage[data-plan='core'] [data-col='core'], .built__stage[data-plan='advanced'] [data-col='advanced'], .built__stage[data-plan='enterprise'] [data-col='enterprise'] { color: var(--fg); font-weight: 500; }
 .built__stage[data-plan='core'] td[data-col='core'][data-state='in'], .built__stage[data-plan='advanced'] td[data-col='advanced'][data-state='in'], .built__stage[data-plan='enterprise'] td[data-col='enterprise'][data-state='in'] { color: var(--cobalt); }
-.plan__notes { grid-column: 1 / -1; }
+.plan__notes { grid-column: 1 / -1; max-width: 42em; }
 .built__where { margin-top: var(--s-10); row-gap: var(--s-4); }
 .built__where .t-question { grid-column: 1 / span 4; }
 .built__where > div { grid-column: 6 / span 7; display: grid; gap: var(--s-4); }
@@ -117,9 +132,14 @@ body[data-tone='night'] .link { color: var(--sky); }
 .lineof tbody th { width: 16%; padding-top: calc(var(--s-6) + .5em); }
 .lineof__ours { width: 42%; }
 .lineof__yours { font-weight: 300; color: var(--fg-2); }
-.scope__body { row-gap: var(--s-6); }
-.scope__principle { grid-column: 1 / span 5; }
-.scope__body > div { grid-column: 7 / -1; display: grid; gap: var(--s-6); }
+/* Left: the principle, and under it the three commitments that back it. Right: what the scope is, and at
+   the foot what is outside every plan. The definition spans the first two rows, so the left column has no
+   gap between the principle and its list; the two columns end on the same line. */
+.scope__body { row-gap: var(--s-6); grid-template-rows: auto 1fr auto; }
+.scope__principle { grid-column: 1 / span 6; grid-row: 1; }
+.scope__body > .commitments { grid-column: 1 / span 6; grid-row: 2 / span 2; align-self: start; }
+.scope__body > .t-lede { grid-column: 8 / -1; grid-row: 1 / span 2; align-self: start; }
+.scope__outside { grid-column: 8 / -1; grid-row: 3; align-self: end; }
 .commitments li { padding-block: var(--s-4); border-top: 1px solid var(--rule); color: var(--fg-2); }
 .commitments strong { color: var(--fg); }
 .explorer { margin-top: var(--s-10); display: grid; gap: var(--s-5); }
@@ -143,7 +163,9 @@ body[data-tone='night'] .link { color: var(--sky); }
 .explorer__list dt { font-weight: 500; margin-top: var(--s-4); }
 .explorer__list em { font-style: normal; color: var(--cobalt); margin-left: .5em; }
 @media (max-width: 900px) {
-  .scope__head .t-question, .scope__head .t-h1, .scope__principle, .scope__body > div { grid-column: 1 / -1; }
+  .scope__head .t-question, .scope__head .t-h1 { grid-column: 1 / -1; }
+  .scope__body { grid-template-rows: none; }
+  .scope__principle, .scope__body > .commitments, .scope__body > .t-lede, .scope__outside { grid-column: 1 / -1; grid-row: auto; }
   .lineof thead { display: none; }
   .lineof tbody tr { display: grid; }
   .lineof tbody th, .lineof tbody td { width: auto; border: 0; padding: 4px 0; }
@@ -273,13 +295,8 @@ body[data-tone='night'] .link { color: var(--sky); }
   .isthis { columns: 1; }
 }
 
-/* ── 7 · Since 1998 ───────────────────────────────────────────────────── */
-/* On the home page: two sentences, one above the other, and the way to the rest of it. */
-.years__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); align-items: end; align-items: last baseline; }
-.years__h { grid-column: 1 / span 9; text-wrap: wrap; }
-.years__more { grid-column: 10 / -1; justify-self: end; font-size: var(--t-lede); }
-@media (max-width: 900px) { .years__h, .years__more { grid-column: 1 / -1; justify-self: start; } }
-/* On the company page: the eras, each with its own year, and what each one left behind. */
+/* ── Since 1998 (company page) ────────────────────────────────────────── */
+/* The eras, each with its own year, and what each one left behind. */
 .since .wrap { display: grid; gap: var(--s-5); }
 .eras { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin); padding: var(--s-9) var(--margin) var(--s-6); scrollbar-width: thin; }
 .era { flex: 0 0 min(80vw, 430px); scroll-snap-align: start; display: grid; gap: var(--s-4); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }
@@ -289,15 +306,38 @@ body[data-tone='night'] .link { color: var(--sky); }
 .era__taught { font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; line-height: 1.25; }
 .era__part { padding-top: var(--s-4); border-top: 1px solid var(--rule); }
 
-/* ── 8 · Start: dawn ──────────────────────────────────────────────────── */
-.start { position: relative; overflow: hidden; min-height: 96vh; display: grid; align-items: end; }
+/* ── 7 · The ending: first light ──────────────────────────────────────── */
+/* One scene in two beats. First a wall at dawn, left as a photograph, carrying the one thing a visitor
+   should know about who is asking: how long. Then the ask itself, on the ground the light has warmed. */
+.start { position: relative; overflow: hidden; }
 .start__light { position: absolute; inset: 0; opacity: .75; }
 .start__light .daylight__floor { display: none !important; }
-/* Over a photograph, the ground is laid back in where the type sits. */
 .start__light:has(.photo) { opacity: 1; }
-.start__light:has(.photo)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(8deg, var(--ground-gold) 0 40%, color-mix(in srgb, var(--ground-gold) 74%, transparent) 64%, color-mix(in srgb, var(--ground-gold) 48%, transparent) 100%); }
-.start__inner { position: relative; padding-block: var(--section) var(--s-9); display: grid; gap: var(--s-8); }
+/* The photograph is mirrored and cropped so the bare wall is on the left, where the words go, and the tall
+   patch of light falls on the right, toward the window it comes from. */
+.start__light img { transform: scaleX(-1); object-position: 9% 50% !important; }
+.start__years { position: relative; z-index: 1; min-height: clamp(480px, 92vh, 940px); display: grid; align-content: center; justify-items: start; gap: var(--s-6); padding-block: var(--section) var(--s-8); }
+/* Four short lines, each kept whole. The size follows the screen so the longest always fits a phone. */
+.start__years-line { text-wrap: wrap; font-size: min(var(--t-h1), 11vw); }
+.start__years-line .line { white-space: nowrap; }
+.start__more { font-size: var(--t-lede); }
+/* On the photographed wall the link is set in the deeper blue, which holds against it. */
+.start__more .link { color: var(--cobalt); }
+.start__inner { position: relative; z-index: 1; padding-block: var(--s-9) var(--s-9); display: grid; gap: var(--s-8); }
+/* The ground is laid back in under the ask, full width, rising out of the photograph above it. */
+.start__inner::before { content: ''; position: absolute; z-index: -1; top: -26vh; bottom: 0; left: 50%; width: 100vw; translate: -50% 0; background: linear-gradient(to bottom, transparent 0, color-mix(in srgb, var(--ground-gold) 72%, transparent) 20vh, var(--ground-gold) 34vh); }
+/* Dawn: the wall is dim until the words arrive, then the light comes up, once, in about three seconds. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .start__light::before { content: ''; position: absolute; inset: 0; z-index: 1; background: color-mix(in srgb, var(--ground-night) 44%, transparent); transition: opacity 3200ms var(--ease) 100ms; }
+  .js .start:has(.start__years-line.is-in) .start__light::before { opacity: 0; }
+}
 .start__sub { grid-column: 1 / span 5; }
 .start__how { grid-column: 7 / -1; display: grid; gap: var(--s-6); }
 .start__signoff { font-weight: 600; color: var(--accent); }
-@media (max-width: 900px) { .start__sub, .start__how { grid-column: 1 / -1; } .start .grid { row-gap: var(--s-6); } }
+@media (max-width: 900px) {
+  .start__sub, .start__how { grid-column: 1 / -1; } .start .grid { row-gap: var(--s-6); }
+  /* On a narrow screen the photograph belongs to the first beat only, so it is not stretched down the
+     whole band: the wall keeps its natural scale and a smaller file will do. */
+  .start__light { inset: 0 0 auto 0; height: calc(clamp(480px, 92vh, 940px) + 30vh); }
+  .start__light img { object-position: 30% 50% !important; }
+}

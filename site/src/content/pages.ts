@@ -11,7 +11,7 @@ export const safeWorkspace = {
   parts: [
     { name: 'The desktop', body: 'A Windows desktop in the cloud, built from one golden image. Your files and settings follow you in a managed profile; nothing else lives on the desktop.', byPlan: '', truth: ['BP §4.6'] },
     { name: 'Microsoft 365', body: 'The license that comes with your plan, passed through with no markup.', byPlan: 'Business Premium on Core, E3 on Advanced, E5 on Enterprise.', truth: ['BP §5.1', 'BP §8.5'] },
-    { name: 'Security', body: 'Every access verified, data encrypted at rest and in transit, and a published baseline kept free of drift.', byPlan: 'CIS-hardened images from Advanced. Dedicated host pools and Zero Trust architecture on Enterprise.', truth: ['BP §1.4', 'BP §2.4', 'BP §4.4', 'BP §5.1'] },
+    { name: 'Security', body: 'Every access verified, data encrypted at rest and in transit, CIS-hardened images, and a published baseline kept free of drift.', byPlan: 'Dedicated host pools and Zero Trust architecture on Enterprise.', truth: ['BP §1.4', 'BP §2.4', 'BP §4.4', 'BP §5.1', '01 §20d'] },
     { name: 'Monitoring', body: 'Automated, 24x7. Patching, re-imaging and scaling run on their own.', byPlan: '', truth: ['BP §4.4'] },
     { name: 'Compliance controls', body: 'Controls that support the frameworks your plan covers. We own the technical foundation; your program and your auditor stay yours.', byPlan: '', truth: ['BP §5.1', 'BP §10.3'] },
     { name: 'Support', body: 'One point of contact, one owner for every issue, a service desk from Level 1 to Level 3.', byPlan: 'A Named Technical Account Manager on Enterprise.', truth: ['BP §3.1', 'BP §3.3', 'BP §5.1'] },
@@ -32,7 +32,7 @@ export const safeWorkspace = {
     truth: ['BP §3.1', 'BP §4.3', 'BP §8.4', 'BP §11.2', '01 §20.7', '01 §20c'],
     items: [
       { question: 'Where does it run?', answer: 'In your own cloud.', body: 'We don’t host anything. Your workspace is built in your own Azure tenant, on your own subscription, and delivered on Azure Virtual Desktop.', truth: ['BP §3.1', 'BP §4.3', 'BP §8.4', '01 §20.7'] },
-      { question: 'We have our own datacenter.', answer: 'Then we connect it.', body: 'Your workspace still runs on Azure Virtual Desktop, joined to your datacenter by a private connection: one you already have, or one we help you put in place. If you would rather keep desktops in your datacenter, Safe Workspace can run there on Citrix.', truth: ['01 §20c', 'BP §4.3'] },
+      { question: 'What if there’s already a datacenter?', answer: 'Then we connect it.', body: 'Your workspace still runs on Azure Virtual Desktop, joined to your datacenter by a private connection: one you already have, or one we help you put in place. If you would rather keep desktops in your datacenter, Safe Workspace can run there on Citrix.', truth: ['01 §20c', 'BP §4.3'] },
       { question: 'Whose tenant is it?', answer: 'Yours.', body: 'It is separate from ours, and your data is hosted in the region its regulation requires. Access is tiered, and no named Trisian user holds standing global administrator rights in your tenant.', truth: ['BP §4.3', 'BP §11.2'] },
     ],
   },

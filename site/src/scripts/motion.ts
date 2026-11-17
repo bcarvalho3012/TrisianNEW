@@ -123,7 +123,9 @@ $$<HTMLElement>('[data-plan-root]').forEach((planRoot) => {
 
 /* ── Whose problem is it? ──────────────────────────────────────────────── */
 $$<HTMLElement>('[data-explorer]').forEach((ex) => {
-  const answer = $<HTMLElement>('[data-answer]', ex);
+  // The answer line, by its class. Every chip also carries a `data-answer` attribute (its own answer),
+  // so looking for that attribute found the first chip and wrote the answers into its label.
+  const answer = $<HTMLElement>('.explorer__answer', ex);
   $$<HTMLButtonElement>('.chip', ex).forEach((chip) => {
     chip.addEventListener('click', () => {
       const { side = 'inside', verdict = '', answer: text = '' } = chip.dataset;

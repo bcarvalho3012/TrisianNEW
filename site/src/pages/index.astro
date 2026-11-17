@@ -186,12 +186,10 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
 
       <div class="grid scope__body">
         <p class="t-h2 scope__principle"><span class="ink">{scope.principle}</span></p>
-        <div>
-          <p class="t-lede">{scope.body}</p>
-          <ul class="commitments">
-            {scope.commitments.map((c) => <li><strong>{c.lead}</strong> {c.body}</li>)}
-          </ul>
-        </div>
+        <p class="t-lede">{scope.body}</p>
+        <ul class="commitments">
+          {scope.commitments.map((c) => <li><strong>{c.lead}</strong> {c.body}</li>)}
+        </ul>
       </div>
 
       <div class="explorer" data-explorer>
@@ -212,7 +210,7 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
             <ul data-placed="outside"></ul>
           </div>
         </div>
-        <p class="explorer__answer" aria-live="polite" data-answer><span class="t-small">Choose a situation to see where it lands.</span></p>
+        <p class="explorer__answer" aria-live="polite"><span class="t-small">Choose a situation to see where it lands.</span></p>
         <!-- Still form: complete without script -->
         <noscript>
           <dl class="explorer__list">
@@ -329,20 +327,18 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
     </div>
   </section>
 
-  <!-- 7 · Since 1998 ───────────────────────────────────────────────────── -->
-  <section class="years movement" id="since" data-ground="morning" aria-labelledby="since-h">
-    <div class="wrap years__in">
-      <h2 class="t-h2 years__h" id="since-h">
-        <span class="line">{yearsInBusiness} years {since.heading}</span>
-        <span class="line"><span class="ink">{yearsInCloud} of them {since.ink}</span>.</span>
-      </h2>
-      <p class="years__more"><a class="link" href={url('company')}>{since.more} <span class="arrow" aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-  <!-- 8 · Start ────────────────────────────────────────────────────────── -->
+  <!-- 7 · The ending: first light on a wall. Who is asking, then the ask. ─── -->
   <section class="start" id="start" data-ground="gold" aria-labelledby="start-h">
-    <div class="start__light" data-enter="open"><Photo slot="band-dawn" decorative /></div>
+    <div class="start__light"><Photo slot="band-dawn" sizes="(min-width: 901px) 210vw, 340vw" decorative /></div>
+    <div class="wrap start__years" id="since">
+      <p class="t-h1 start__years-line" data-enter="rise" style="--enter-delay:700ms">
+        <span class="line">{yearsInBusiness} years</span>
+        <span class="line">{since.heading}</span>
+        <span class="line"><span class="ink">{yearsInCloud} of them</span></span>
+        <span class="line"><span class="ink">{since.ink}</span>.</span>
+      </p>
+      <p class="start__more" data-enter="rise" style="--enter-delay:900ms"><a class="link" href={url('company')}>{since.more} <span class="arrow" aria-hidden="true">→</span></a></p>
+    </div>
     <div class="wrap start__inner">
       <h2 class="t-statement" id="start-h">{start.lines.join(' ')} <span class="ink">{start.ink}</span> {start.after}</h2>
       <div class="grid">

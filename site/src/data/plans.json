@@ -35,7 +35,7 @@
   ],
   "rows": [
     { "label": "Named Technical Account Manager", "part": "support", "core": "no", "advanced": "no", "enterprise": "in" },
-    { "label": "CIS-hardened images", "part": "security", "core": "no", "advanced": "in", "enterprise": "in" },
+    { "label": "CIS-hardened images", "part": "security", "core": "in", "advanced": "in", "enterprise": "in" },
     { "label": "Advanced email security and email authentication", "part": "security", "core": "addon", "advanced": "in", "enterprise": "in" },
     { "label": "Personal device management and web filtering", "part": "security", "core": "project", "advanced": "project", "enterprise": "project" },
     { "label": "Infrastructure health monitoring", "part": "monitoring", "core": "addon", "advanced": "in", "enterprise": "in" },

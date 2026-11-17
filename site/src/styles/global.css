@@ -59,6 +59,10 @@ strong, b { font-weight: 600; }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
 .movement { position: relative; padding-block: var(--section); }
 .movement[data-ground] { background: transparent; }
+/* Movements share the page's one ground, so the space under one and the space over the next read as a
+   single hole. The second keeps about a third of its top space. */
+.movement + .movement, .tuesday + .movement { padding-top: calc(var(--section) * .35); }
+.movement + .tuesday .tuesday__head { padding-top: calc(var(--section) * .35); }
 
 /* ── Links and buttons ────────────────────────────────────────────────── */
 .link {
@@ -84,6 +88,9 @@ strong, b { font-weight: 600; }
 .btn--quiet { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1.5px currentColor; }
 .btn--quiet:hover, .btn--quiet:focus-visible { background: color-mix(in srgb, currentColor 8%, transparent); }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; }
+/* A text link beside a button is given the same 44px to press, without changing how it looks. */
+.actions .link { position: relative; }
+.actions .link::after { content: ''; position: absolute; inset: -8px -6px; }
 
 /* ── Header ───────────────────────────────────────────────────────────── */
 .site-header {
@@ -105,11 +112,11 @@ strong, b { font-weight: 600; }
   .site-header::before { background: color-mix(in srgb, var(--ground) 82%, transparent); -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px); }
 }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.wordmark { display: block; line-height: 0; padding-block: 9px; }
+.wordmark { display: block; line-height: 0; padding-block: 11px; }
 .wordmark img { height: 22px; width: auto; }
 .site-nav { display: flex; align-items: center; gap: clamp(18px, 2.2vw, 36px); }
 .site-nav a:not(.btn) {
-  position: relative; text-decoration: none; font-weight: 500; font-size: .9375rem; color: var(--fg); padding: 8px 0;
+  position: relative; text-decoration: none; font-weight: 500; font-size: .9375rem; color: var(--fg); padding: 10px 0;
 }
 .site-nav a:not(.btn)::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 2px; height: 1.5px; background: var(--accent);
@@ -157,7 +164,9 @@ strong, b { font-weight: 600; }
 .site-footer .grid { row-gap: var(--s-7); }
 .site-footer .statement { grid-column: 1 / span 5; }
 .site-footer nav { grid-column: span 2; }
-.site-footer nav:first-of-type { grid-column: 8 / span 2; }
+/* Three columns of links in the last six columns: starting the first at column 8 left no room for the third,
+   which dropped to a row of its own. */
+.site-footer nav:first-of-type { grid-column: 7 / span 2; }
 .site-footer h2 { font-size: var(--t-label); font-weight: 500; color: var(--ink-3); margin-bottom: 14px; }
 .site-footer li + li { margin-top: 4px; }
 .site-footer a { text-decoration: none; }
@@ -165,8 +174,14 @@ strong, b { font-weight: 600; }
 .site-footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .site-footer .legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; padding-top: var(--s-6); border-top: 1px solid var(--rule); color: var(--ink-3); font-size: var(--t-small); }
 .site-footer .signoff { font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; margin-top: var(--s-6); }
+/* Narrower: the statement takes a row, and the three lists stay side by side. Stacked one under another
+   they each used a fifth of the row and left the rest blank. On a phone they sit two to a row. */
 @media (max-width: 900px) {
-  .site-footer .statement, .site-footer nav, .site-footer nav:first-of-type { grid-column: 1 / -1; }
+  .site-footer .statement { grid-column: 1 / -1; }
+  .site-footer nav, .site-footer nav:first-of-type { grid-column: span 4; }
+}
+@media (max-width: 560px) {
+  .site-footer nav, .site-footer nav:first-of-type { grid-column: span 6; }
 }
 
 /* ── Motion: page-load type (CSS only, starts with first paint) ───────── */
@@ -174,12 +189,19 @@ strong, b { font-weight: 600; }
   /* Armed only when script is running (html.js), so that script can also guarantee the finish. */
   .js .assemble .line { overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
   .js .assemble .line > span { display: inline-block; transform: translateY(105%); animation: rise var(--d-3) var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
-  .js .assemble .ink { background: linear-gradient(90deg, var(--accent) 50%, var(--fg) 50%) 100% 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 300; animation: inking 900ms var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 520ms); }
+  /* The wipe is a two-color band behind the letters, shown only through them. Two things keep the last
+     letter whole and on time:
+     - the band is a little wider than the phrase (padding, taken back by an equal negative margin), because
+       large type is set with negative tracking and its last letter hangs past the phrase's own box;
+     - the band's edge travels 15% past the end of the phrase, so the slow last stretch of the easing happens
+       off the letters and the final letter does not sit half-inked. */
+  .js .assemble .ink, .js .ink[data-ink] { padding-inline: .14em; margin-inline: -.14em; }
+  .js .assemble .ink { background: linear-gradient(90deg, var(--accent) 53.48%, var(--fg) 53.48%) 100% 0 / 215% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 300; animation: inking 900ms var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 520ms); }
   @keyframes rise { to { transform: translateY(0); } }
   @keyframes inking { 0% { background-position: 100% 0; font-weight: 300; } 35% { font-weight: 600; } 100% { background-position: 0 0; font-weight: 600; } }
 
   /* Inking on scroll: the answer word is wiped from ink to cobalt when it comes into view. */
-  .js .ink[data-ink] { background: linear-gradient(90deg, var(--accent) 50%, var(--fg) 50%) 100% 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .js .ink[data-ink] { background: linear-gradient(90deg, var(--accent) 53.48%, var(--fg) 53.48%) 100% 0 / 215% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   .js .ink[data-ink].is-inked { background-position: 0 0; transition: background-position 1000ms var(--ease) 180ms; }
 
   /* Entrances are armed by script (html.js) and released by .is-in; a timer releases them regardless. */
@@ -190,7 +212,10 @@ strong, b { font-weight: 600; }
   .js [data-enter='open-left'] > * { clip-path: inset(0 100% 0 0); }
   .js [data-enter='draw'] { --draw: 0; }
   .js [data-enter].is-in { opacity: 1; transform: none; --draw: 1; transition: opacity var(--d-3) var(--ease) var(--enter-delay), transform var(--d-3) var(--ease) var(--enter-delay); }
-  .js [data-enter].is-in > * { clip-path: inset(0 0 0 0); transition: clip-path var(--d-4) var(--ease) var(--enter-delay, 0ms); }
+  /* Only the two crop entrances clip, and once open the crop rests a little outside the child's own box.
+     Cropping every entrance's children to their exact boxes cut the tails of g and y on large, tightly
+     set lines. */
+  .js [data-enter='open'].is-in > *, .js [data-enter='open-left'].is-in > * { clip-path: inset(-.3em -.2em -.4em -.2em); transition: clip-path var(--d-4) var(--ease) var(--enter-delay, 0ms); }
   .js [data-enter='draw'].is-in { transition: --draw 1300ms var(--ease); }
 
   /* The doors open one after another, left to right. */

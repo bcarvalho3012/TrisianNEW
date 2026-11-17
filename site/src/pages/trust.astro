@@ -20,21 +20,21 @@ import { proof } from '../content/home';
             <div class="qa__answer">
               <p class="t-h2"><span class="ink">{q.answer}</span></p>
               <p class="t-lede measure">{q.body}</p>
-              {i === 1 && (
-                <>
-                  <table class="hold">
-                    <caption class="sr-only">What Trisian holds, and what its controls support</caption>
-                    <tbody>
-                      <tr><th scope="row" class="t-label">We hold</th><td class="t-h3">{proof.hold}</td></tr>
-                      {proof.support.map((s, k) => (
-                        <tr><th scope="row" class="t-label">{k === 0 ? 'Our controls support your obligations under' : ''}</th><td><span class="t-label">{s.plan}</span><span class="t-h3">{s.frameworks.join(' · ')}</span></td></tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <p class="t-small measure">{proof.qualifier}</p>
-                </>
-              )}
             </div>
+            {i === 1 && (
+              <>
+                <table class="hold">
+                  <caption class="sr-only">What Trisian holds, and what its controls support</caption>
+                  <tbody>
+                    <tr><th scope="row" class="t-label">We hold</th><td class="t-h3">{proof.hold}</td></tr>
+                    {proof.support.map((s, k) => (
+                      <tr><th scope="row" class="t-label">{k === 0 ? 'Our controls support your obligations under' : ''}</th><td><span class="t-label">{s.plan}</span><span class="t-h3">{s.frameworks.join(' · ')}</span></td></tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p class="t-small measure hold__note">{proof.qualifier}</p>
+              </>
+            )}
           </li>
         ))}
       </ul>

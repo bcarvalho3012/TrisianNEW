@@ -52,7 +52,7 @@ const states = plans.states as Record<string, string>;
   </section>
 
   <section class="band" data-ground="morning" aria-labelledby="invoice-h">
-    <div class="wrap band__grid">
+    <div class="wrap band__grid band__grid--aside">
       <div class="band__head">
         <p class="t-question">{c.invoice.question}</p>
         <h2 class="t-h1" id="invoice-h"><span class="ink">{c.invoice.answer}</span></h2>
@@ -60,14 +60,9 @@ const states = plans.states as Record<string, string>;
       <div class="band__body" data-enter="open">
         <Invoice />
       </div>
-    </div>
-  </section>
-
-  <section class="band" data-ground="morning" aria-labelledby="around-h">
-    <div class="wrap band__grid">
-      <div class="band__head"><h2 class="t-h2" id="around-h">{c.around.heading}</h2></div>
-      <div class="band__body">
-        <ul class="invoice">
+      <div class="band__aside">
+        <h3 class="t-h3" id="around-h">{c.around.heading}</h3>
+        <ul class="invoice invoice--stack">
           {c.around.items.map((item) => <li><strong>{item.name}</strong><span>{item.body}</span></li>)}
         </ul>
         <p><a class="link" href={url('safe-workspace#built')}>How it gets built <span class="arrow" aria-hidden="true">→</span></a></p>
