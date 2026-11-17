@@ -108,7 +108,6 @@ export const projectsPage = {
         line: 'Building the defenses around the workspace.',
         truth: ['BP §6.2', 'BP §4.5', 'BP §5.1', '01 §20e'],
         projects: [
-          { name: 'Phishing-resistant sign-in', what: 'Passwordless sign-in for your users and administrators.' },
           { name: 'Privileged access', what: 'How administrator access is granted, and to whom.' },
           { name: 'Endpoint detection policies', what: 'The endpoint detection policies in your Microsoft 365 license, designed and configured.' },
           { name: 'Data loss prevention', what: 'Data loss prevention policies, designed and configured.' },
