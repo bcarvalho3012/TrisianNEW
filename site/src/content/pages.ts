@@ -53,6 +53,121 @@ export const safeWorkspace = {
   },
 };
 
+export const projectsPage = {
+  title: 'Projects — Trisian',
+  description: 'Projects are how a Safe Workspace gets built, and how it changes afterwards. Each one is scoped and quoted in writing before work begins.',
+  lines: ['Every project,'],
+  ink: 'in writing first',
+  lede: 'Projects are how your workspace gets built, and how it changes afterwards. Each one starts from what you need, and is scoped and quoted before any work begins.',
+  truth: ['BP §6.2', '01 §20'],
+  // The sheet in the opening: what is agreed before a project starts. No amounts, no dates.
+  sheet: {
+    title: 'A project, in writing',
+    group: 'Agreed before work begins',
+    truth: ['BP §6.2'],
+    items: [
+      { name: 'The need', what: 'What you asked for, in your words.', truth: ['BP §6.2'] },
+      { name: 'The scope', what: 'What is in, and what is not.', truth: ['BP §6.2'] },
+      { name: 'The timeline', what: 'When it starts, and when it is finished.', truth: ['BP §6.2'] },
+      { name: 'The deliverables', what: 'What you have at the end.', truth: ['BP §6.2'] },
+      { name: 'Acceptance', what: 'How we both know it is done.', truth: ['BP §6.2'] },
+    ],
+    price: { label: 'The price', value: 'Fixed, or time and materials' },
+  },
+  kinds: {
+    lead: 'Six kinds of',
+    ink: 'work',
+    intro: 'This is where the work is, not a fixed list. If yours is not here, tell us what you need and we will scope it.',
+    truth: ['BP §6.2', '01 §20e'],
+    areas: [
+      {
+        name: 'Migrations',
+        line: 'Getting onto the platform, from wherever you are today.',
+        truth: ['BP §6.2', '01 §20e'],
+        projects: [
+          { name: 'Safe Workspace migration', what: 'The full move onto the platform, with your Microsoft 365 tenant where it needs to move too.' },
+          { name: 'On-premises desktops to the cloud', what: 'From the servers in your building to cloud desktops.' },
+          { name: 'Citrix to Azure Virtual Desktop', what: 'Off Citrix and onto Azure Virtual Desktop.' },
+          { name: 'Multi-site rollout', what: 'More sites and acquired companies, brought onto the same workspace.' },
+        ],
+        note: '',
+      },
+      {
+        name: 'Platform',
+        line: 'Designing and building what the workspace runs on.',
+        truth: ['BP §6.2', '01 §20.3', '01 §20e'],
+        projects: [
+          { name: 'Safe Workspace deployment', what: 'The workspace itself, designed and built around your applications and your people.' },
+          { name: 'Azure infrastructure', what: 'The Azure environment in your own tenant that the workspace runs in.' },
+          { name: 'Microsoft 365 tenant', what: 'Your Microsoft 365 tenant, designed and built with the workspace.' },
+        ],
+        note: 'For Enterprise clients: multi-region infrastructure, designed and quoted for each client.',
+      },
+      {
+        name: 'Security and identity',
+        line: 'Building the defenses around the workspace.',
+        truth: ['BP §6.2', 'BP §4.5', 'BP §5.1', '01 §20e'],
+        projects: [
+          { name: 'Phishing-resistant sign-in', what: 'Passwordless sign-in for your users and administrators.' },
+          { name: 'Privileged access', what: 'How administrator access is granted, and to whom.' },
+          { name: 'Endpoint detection policies', what: 'The endpoint detection policies in your Microsoft 365 license, designed and configured.' },
+          { name: 'Data loss prevention', what: 'Data loss prevention policies, designed and configured.' },
+          { name: 'Device management and web filtering', what: 'Management of the devices that reach the workspace, with web filtering.' },
+        ],
+        note: '',
+      },
+      {
+        name: 'Compliance',
+        line: 'Closing the gap between where you stand and the rules you answer to.',
+        truth: ['BP §6.2', 'BP §6.1', 'BP §10.3', '01 §20e'],
+        projects: [
+          { name: 'Control gap analysis', what: 'Your environment measured against the controls of your framework.' },
+          { name: 'Technical remediation', what: 'The configuration changes that close the gaps, with the evidence of each.' },
+          { name: 'Compliance automation', what: 'Continuous control monitoring and evidence collection, set up for you.' },
+        ],
+        note: 'Your program, your policies and your auditor stay yours.',
+      },
+      {
+        name: 'Continuity and infrastructure',
+        line: 'Planning for the unexpected.',
+        truth: ['BP §6.2', '01 §20c', '01 §20e'],
+        projects: [
+          { name: 'Disaster recovery and backup', what: 'Recovery designed for the workspace and its data.' },
+          { name: 'Annual recovery test', what: 'The recovery plan, tested once a year.' },
+          { name: 'Business continuity', what: 'Continuity planning for the managed environment.' },
+          { name: 'Network', what: 'Network design for the workspace, including a private connection to your datacenter.' },
+        ],
+        note: '',
+      },
+      {
+        name: 'Your sector',
+        line: 'Work specific to financial services and to healthcare.',
+        truth: ['BP §6.2', '01 §20e'],
+        projects: [
+          { name: 'Financial services', what: 'Sector-specific work for firms that answer to a regulator.', door: 'financial-services' },
+          { name: 'Healthcare', what: 'Sector-specific work for organizations that hold patient information.', door: 'healthcare' },
+        ],
+        note: 'For Enterprise clients: customized industry images, designed and quoted for each client.',
+      },
+    ],
+  },
+  ends: {
+    lead: 'What a project builds,',
+    ink: 'we then run',
+    body: 'A project has an end. What it put in place does not leave with it: from then on it is part of Safe Workspace, supported inside a scope agreed in writing.',
+    truth: ['BP §3.2', 'BP §4.2', '01 §20.9'],
+    zoneLabel: 'Inside the Managed Scope',
+    zoneTerms: 'an owner · a service level · a resolution path',
+    built: ['Your workspace', 'Your Azure environment', 'Device management', 'The private connection'],
+  },
+  questions: [
+    { question: 'Can we hire you for one project?', answer: 'As the start of Safe Workspace, yes.', body: 'Projects are for Safe Workspace clients: inside an agreement you already have, or as the project that starts one.', truth: ['BP §6.2'] },
+    { question: 'How is a project priced?', answer: 'On its own, before it starts.', body: 'Each project is quoted separately, at a fixed price or on time and materials. It is a line of its own on your invoice, apart from the platform fee.', truth: ['BP §6.2', 'BP §8.1'] },
+    { question: 'Are add-ons projects?', answer: 'Setting one up is.', body: 'Each add-on has a license that recurs and a set-up that happens once. The set-up is scoped and quoted like any other project.', truth: ['BP §6.1', '01 §20e'] },
+    { question: 'What is never a project?', answer: 'Four things, on every plan.', body: 'Application-level support for business software, hardware, software development and telecommunications. We run the infrastructure and operating system your applications need.', truth: ['BP §7.1'] },
+  ],
+};
+
 export const plansPage = {
   title: 'Plans — Trisian',
   description: 'Core, Advanced and Enterprise. Each has one price per user, per month, and every plan starts at 50 users.',

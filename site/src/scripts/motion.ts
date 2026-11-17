@@ -32,7 +32,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && header?.
 $$<HTMLAnchorElement>('.site-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
 // The sheet belongs to the narrow layout. Turning a tablet on its side, or coming back to a page the browser
 // kept in memory, must never leave it open with the page locked behind it.
-window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
+window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
 window.addEventListener('pageshow', (e) => { if (e.persisted) setMenu(false); });
 
 /* ── Entrances: armed by html.js, released when seen, and by a failsafe ── */

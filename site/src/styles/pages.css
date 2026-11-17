@@ -169,6 +169,41 @@
   }
 }
 
+/* ── Projects ─────────────────────────────────────────────────────────── */
+/* The six kinds of work. Each row: the area and what it is for on the left, the projects in it on the right,
+   two to a line. The rule over each row is drawn, left to right, when the list comes into view. */
+.kinds__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-5); align-items: end; margin-bottom: var(--s-8); }
+.kinds__head .t-h1 { grid-column: 1 / span 6; }
+.kinds__head .t-lede { grid-column: 8 / -1; }
+.kinds { display: grid; }
+.kinds > li { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-5); padding-block: var(--s-7); background: linear-gradient(var(--fg), var(--fg)) 0 0 / calc(var(--draw, 1) * 100%) 1.5px no-repeat; }
+.kinds__area { grid-column: 1 / span 4; display: grid; gap: var(--s-3); align-content: start; }
+.kinds__note { color: var(--fg-2); padding-top: var(--s-3); border-top: 1px solid var(--rule); margin-top: var(--s-3); }
+.kinds__projects { grid-column: 6 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gutter); align-content: start; }
+.kinds__projects li { display: grid; gap: 4px; align-content: start; padding-block: var(--s-4); border-top: 1px solid var(--rule); }
+.kinds__projects li:nth-child(-n+2) { border-top: 0; padding-top: 6px; }
+.kinds__projects strong { font-weight: 500; letter-spacing: -.01em; }
+.kinds__projects span { color: var(--fg-2); }
+/* What a project builds goes inside the scope: the statement on the left, the scope's own box on the right
+   with the built things in it. They land once, as the box comes into view. */
+.handover { align-items: center; row-gap: var(--s-7); }
+.handover__text { grid-column: 1 / span 6; display: grid; gap: var(--s-5); }
+.handover__figure { grid-column: 8 / -1; }
+.handover__figure .zone { min-height: 0; padding: var(--s-6); gap: var(--s-4); }
+.handover__figure .zone ul { margin-top: var(--s-4); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .handover__figure[data-enter]:not(.is-in) .zone li { animation: none; opacity: 0; }
+  .js .handover__figure[data-enter].is-in .zone li { animation: land var(--d-3) var(--ease) both; animation-delay: calc(var(--k, 0) * 140ms + 200ms); }
+}
+@media (max-width: 900px) {
+  .kinds__head .t-h1, .kinds__head .t-lede, .kinds__area, .kinds__projects, .handover__text, .handover__figure { grid-column: 1 / -1; }
+  .kinds__head { margin-bottom: var(--s-7); }
+}
+@media (max-width: 560px) {
+  .kinds__projects { grid-template-columns: minmax(0, 1fr); }
+  .kinds__projects li:nth-child(2) { border-top: 1px solid var(--rule); padding-top: var(--s-4); }
+}
+
 /* ── Before, and with ─────────────────────────────────────────────────── */
 .beforewith th, .beforewith td { text-align: left; vertical-align: top; padding: var(--s-5) var(--s-5) var(--s-5) 0; border-top: 1px solid var(--rule); }
 .beforewith thead th { border-top: 0; font-size: var(--t-h3); font-weight: 300; letter-spacing: -.02em; padding-bottom: var(--s-4); }

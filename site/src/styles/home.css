@@ -3,7 +3,7 @@
 body[data-tone='night'] { --fg: var(--night-ink); --fg-2: var(--night-ink-2); --fg-3: var(--night-ink-3); --accent: var(--sky); }
 body[data-tone='night'] .link { color: var(--sky); }
 /* Wide screens only: on a phone the button lives in the menu sheet, which is always light. */
-@media (min-width: 901px) { body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); } }
+@media (min-width: 1024px) { body[data-tone='night'] .site-nav .btn { background: #fff; color: var(--navy); } }
 
 /* ── 0 · Hero ─────────────────────────────────────────────────────────── */
 .hero { position: relative; padding-top: clamp(112px, 9.5vw, 156px); padding-bottom: var(--s-9); }
