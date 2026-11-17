@@ -91,6 +91,13 @@ strong, b { font-weight: 600; }
 /* A text link beside a button is given the same 44px to press, without changing how it looks. */
 .actions .link { position: relative; }
 .actions .link::after { content: ''; position: absolute; inset: -8px -6px; }
+/* Under a finger, a text link that stands alone in its paragraph, and each footer link, is at least 44px tall. */
+@media (pointer: coarse) {
+  p > .link:only-child { position: relative; }
+  p > .link:only-child::after { content: ''; position: absolute; inset: -9px -6px; }
+  .site-footer li + li { margin-top: 0; }
+  .site-footer li a { padding-block: 9px; }
+}
 
 /* ── Header ───────────────────────────────────────────────────────────── */
 .site-header {

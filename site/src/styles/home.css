@@ -87,7 +87,7 @@ body[data-tone='night'] .link { color: var(--sky); }
 .switch span { display: block; padding: 11px 18px; border-radius: var(--r-control); box-shadow: inset 0 0 0 1.5px var(--control-border); font-weight: 500; transition: background-color var(--d-1) var(--ease), color var(--d-1) var(--ease), box-shadow var(--d-1) var(--ease); }
 .switch input:checked + span { background: var(--cobalt); color: #fff; box-shadow: inset 0 0 0 1.5px var(--cobalt); }
 .switch input:focus-visible + span { outline: 2px solid var(--bright); outline-offset: 3px; }
-.plan { grid-area: plan; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: clamp(24px, 5vw, 96px); row-gap: var(--s-5); padding-top: var(--s-7); border-top: 1px solid var(--rule); align-items: start; }
+.plan { grid-area: plan; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); column-gap: clamp(24px, 5vw, 96px); row-gap: var(--s-5); grid-template-rows: auto 1fr; padding-top: var(--s-7); border-top: 1px solid var(--rule); align-items: start; }
 /* The switch sits on top of what it changes: the summary under it, and the column beside it.
    The three summaries share one cell, so the cell is always as tall as the longest and nothing below moves. */
 .plan__pick { grid-column: 1; grid-row: 1; display: grid; gap: var(--s-5); align-content: start; min-width: 0; }
@@ -98,24 +98,37 @@ body[data-tone='night'] .link { color: var(--sky); }
 .built__stage[data-plan='advanced'] [data-plan-panel]:not([data-plan-panel='advanced']),
 .built__stage[data-plan='enterprise'] [data-plan-panel]:not([data-plan-panel='enterprise']) { visibility: hidden; opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { .plan__facts { transition: opacity var(--d-2) var(--ease); } }
-.plan__table { grid-column: 2; grid-row: 1; font-size: var(--t-small); }
+.plan__table { grid-column: 2; grid-row: 1 / span 2; font-size: var(--t-small); }
 .plan__table th, .plan__table td { text-align: left; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); font-weight: 400; vertical-align: top; }
 .plan__table thead th { font-size: var(--t-label); font-weight: 500; color: var(--fg-3); }
 .plan__table td { color: var(--fg-3); white-space: nowrap; transition: color var(--d-2) var(--ease), background-color var(--d-3) var(--ease); }
 .plan__table .mark { display: inline-block; width: 1.1em; color: inherit; }
 .built__stage[data-plan='core'] [data-col='core'], .built__stage[data-plan='advanced'] [data-col='advanced'], .built__stage[data-plan='enterprise'] [data-col='enterprise'] { color: var(--fg); font-weight: 500; }
 .built__stage[data-plan='core'] td[data-col='core'][data-state='in'], .built__stage[data-plan='advanced'] td[data-col='advanced'][data-state='in'], .built__stage[data-plan='enterprise'] td[data-col='enterprise'][data-state='in'] { color: var(--cobalt); }
-.plan__notes { grid-column: 1 / -1; max-width: 42em; }
-.built__where { margin-top: var(--s-10); row-gap: var(--s-4); }
+/* The notes sit under the switch, resting on the table's last line. On a row of their own they stood under
+   the switch anyway, with the right of the page blank beside them. */
+.plan__notes { grid-column: 1; grid-row: 2; align-self: end; max-width: 42em; }
+.built__where { margin-top: var(--s-8); row-gap: var(--s-4); }
 .built__where .t-question { grid-column: 1 / span 4; }
 .built__where > div { grid-column: 6 / span 7; display: grid; gap: var(--s-4); }
+/* The key to the marks: shown only where the table shows marks without their words (a phone). */
+.plan__key { display: none; grid-column: 1 / -1; flex-wrap: wrap; gap: 6px 20px; font-size: var(--t-small); color: var(--fg-2); }
 @media (max-width: 1000px) {
-  .built__stage { grid-template-columns: 1fr; grid-template-areas: 'foundation' 'figure' 'yours' 'shaped' 'supported' 'plan'; }
+  /* minmax(0, …): a plain 1fr lets the table's narrowest possible width (328px) set the column, which pushed
+     this whole section past the edge of a 320 to 360px screen. */
+  .built__stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'foundation' 'figure' 'yours' 'shaped' 'supported' 'plan'; }
   .built__figure { max-width: 460px; }
-  .plan { grid-template-columns: 1fr; }
-  .plan__table, .plan__pick { grid-column: 1; grid-row: auto; }
+  .plan { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .plan__table, .plan__pick, .plan__notes { grid-column: 1; grid-row: auto; }
   .plan__table td { white-space: normal; }
   .built__intro .t-question, .built__intro .t-lede, .built__where .t-question, .built__where > div { grid-column: 1 / -1; }
+}
+/* On a phone each cell shows its mark; the words are in the key under the table, and are still read out. */
+@media (max-width: 560px) {
+  .plan__table th, .plan__table td { padding-right: 6px; }
+  .plan__table tbody th { overflow-wrap: anywhere; }
+  .plan__table .state { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .plan__key { display: flex; }
 }
 
 /* ── 3 · Inside the scope: the line, read at a glance ─────────────────── */
@@ -142,7 +155,12 @@ body[data-tone='night'] .link { color: var(--sky); }
 .scope__outside { grid-column: 8 / -1; grid-row: 3; align-self: end; }
 .commitments li { padding-block: var(--s-4); border-top: 1px solid var(--rule); color: var(--fg-2); }
 .commitments strong { color: var(--fg); }
-.explorer { margin-top: var(--s-10); display: grid; gap: var(--s-5); }
+/* Two columns, the same as the two boxes: the answer sits under "Inside", and the closing note under
+   "Outside", instead of the note taking a row of its own with the right half of the page blank beside it. */
+.explorer { margin-top: var(--s-9); display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s-5) var(--gutter); }
+.explorer > * { grid-column: 1 / -1; }
+.explorer > .explorer__answer { grid-column: 1; }
+.explorer > p.t-small { grid-column: 2; }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip { cursor: pointer; padding: 12px 18px; border-radius: var(--r-control); border: 0; background: var(--ground-noon); box-shadow: inset 0 0 0 1.5px var(--control-border); font-weight: 500; text-align: left; transition: background-color var(--d-1) var(--ease), color var(--d-1) var(--ease), box-shadow var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }
 .chip:hover { box-shadow: inset 0 0 0 1.5px var(--cobalt); color: var(--cobalt); }
@@ -175,6 +193,8 @@ body[data-tone='night'] .link { color: var(--sky); }
   .lineof__ours::before { content: 'Ours: '; color: var(--accent); font-weight: 600; }
   .lineof__yours::before { content: 'Yours: '; }
   .explorer__field { grid-template-columns: 1fr; }
+  .explorer { grid-template-columns: minmax(0, 1fr); }
+  .explorer > .explorer__answer, .explorer > p.t-small { grid-column: 1; }
 }
 
 /* ── 4 · A Tuesday: the page changes time of day ──────────────────────── */
@@ -208,8 +228,8 @@ body[data-tone='night'] .link { color: var(--sky); }
 
 /* ── 5 · In plain view: three exhibits ────────────────────────────────── */
 .proof__statement { margin-bottom: var(--s-7); }
-.proof__intro { margin-bottom: var(--s-10); }
-.exhibit { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); align-items: center; padding-block: var(--s-9); border-top: 1.5px solid var(--fg); }
+.proof__intro { margin-bottom: var(--s-8); }
+.exhibit { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); align-items: center; padding-block: var(--s-8); border-top: 1.5px solid var(--fg); }
 .exhibit__text { grid-column: 1 / span 5; display: grid; gap: var(--s-4); }
 .exhibit__figure { grid-column: 7 / -1; }
 .exhibit:nth-of-type(even) .exhibit__text { grid-column: 8 / -1; grid-row: 1; }
@@ -234,13 +254,21 @@ body[data-tone='night'] .link { color: var(--sky); }
 .hold th, .hold td { text-align: left; vertical-align: top; padding: var(--s-5) 0; border-top: 1px solid var(--rule); }
 .hold tr:first-child th, .hold tr:first-child td { border-top: 1.5px solid var(--fg); }
 .hold th { width: 34%; padding-right: var(--s-5); padding-top: calc(var(--s-5) + .35em); }
-.hold td { display: grid; gap: 6px; }
+/* The cell stays a table cell (as a grid its top rule sat a pixel off the rule of the cell beside it). */
+.hold td > span { display: block; }
+.hold td > span + span { margin-top: 6px; }
 .hold tr:first-child td { color: var(--accent); font-weight: 600; }
 .hold td .t-h3 { font-weight: 300; }
 .hold tr:first-child td.t-h3 { font-weight: 600; }
-.proof__qualifier { margin-top: var(--s-7); }
+/* The note about the frameworks sits under the list it qualifies, in line with the list's values. As a
+   paragraph of its own at the foot of the section it stood 200px below everything, beside an empty column. */
+.exhibit--certified .exhibit__figure { display: grid; gap: var(--s-5); }
+.exhibit .hold__note { margin-left: 34%; max-width: 36em; }
+/* The last exhibit ends where the section's own bottom space begins. */
+.exhibit:last-of-type { padding-bottom: 0; }
 @media (max-width: 900px) {
   .exhibit__text, .exhibit__figure, .exhibit:nth-of-type(even) .exhibit__text, .exhibit:nth-of-type(even) .exhibit__figure { grid-column: 1 / -1; grid-row: auto; }
+  .exhibit .hold__note { margin-left: 0; }
 }
 
 /* ── 6 · Who it's for: four doors ─────────────────────────────────────── */
@@ -298,6 +326,7 @@ body[data-tone='night'] .link { color: var(--sky); }
 /* ── Since 1998 (company page) ────────────────────────────────────────── */
 /* The eras, each with its own year, and what each one left behind. */
 .since .wrap { display: grid; gap: var(--s-5); }
+.since .t-h2 { text-wrap: pretty; }
 .eras { display: flex; gap: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin); padding: var(--s-9) var(--margin) var(--s-6); scrollbar-width: thin; }
 .era { flex: 0 0 min(80vw, 430px); scroll-snap-align: start; display: grid; gap: var(--s-4); align-content: start; padding-top: var(--s-5); border-top: 1.5px solid var(--fg); }
 .era__year { font-size: var(--t-h1); font-weight: 300; letter-spacing: -.035em; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }

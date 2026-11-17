@@ -32,14 +32,14 @@ const states = plans.states as Record<string, string>;
       <div class="compare">
         <table>
           <caption class="sr-only">What each plan includes</caption>
-          <thead><tr><th scope="col">What changes with the plan</th>{plans.plans.map((p) => <th scope="col">{p.name}</th>)}</tr></thead>
+          <thead><tr><th scope="col">Line by line</th>{plans.plans.map((p) => <th scope="col">{p.name}</th>)}</tr></thead>
           <tbody>
             {plans.rows.map((row) => (
               <tr>
                 <th scope="row">{row.label}</th>
                 {plans.plans.map((p) => {
                   const state = (row as Record<string, string>)[p.id];
-                  return <td data-state={state}><span class="mark" aria-hidden="true">{stateMark[state]}</span> {states[state]}</td>;
+                  return <td data-state={state}><span class="mark" aria-hidden="true">{stateMark[state]}</span> <span class="state">{states[state]}</span></td>;
                 })}
               </tr>
             ))}

@@ -68,7 +68,9 @@
   --margin: clamp(20px, 5vw, 88px);
   --gutter: clamp(16px, 2vw, 32px);
   --max: 1360px;
-  --section: clamp(88px, 10vw, 168px);
+  /* Capped at 144px: on screens wider than 1440 it used to grow to 168, which made every gap between
+     sections larger on exactly the screens with the most empty width. */
+  --section: clamp(88px, 10vw, 144px);
 
   /* Shape and depth */
   --r-window: clamp(16px, 2vw, 28px);

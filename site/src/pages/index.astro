@@ -141,17 +141,19 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
             <caption class="sr-only">What changes with the plan</caption>
             <thead><tr><th scope="col">What changes with the plan</th>{plans.plans.map((p) => <th scope="col" data-col={p.id}>{p.name}</th>)}</tr></thead>
             <tbody>
-              {plans.rows.map((row) => (
+              {/* Only the lines that differ between plans: this table is headed "What changes with the plan". Every line is on the Plans page. */}
+              {plans.rows.filter((row) => !(row.core === row.advanced && row.advanced === row.enterprise)).map((row) => (
                 <tr>
                   <th scope="row">{row.label}</th>
                   {plans.plans.map((p) => {
                     const state = (row as Record<string, string>)[p.id];
-                    return <td data-col={p.id} data-state={state}><span class="mark" aria-hidden="true">{stateMark[state]}</span> {(plans.states as Record<string, string>)[state]}</td>;
+                    return <td data-col={p.id} data-state={state}><span class="mark" aria-hidden="true">{stateMark[state]}</span> <span class="state">{(plans.states as Record<string, string>)[state]}</span></td>;
                   })}
                 </tr>
               ))}
             </tbody>
           </table>
+          <p class="plan__key" aria-hidden="true">{Object.entries(plans.states).map(([k, v]) => <span>{stateMark[k]} {v}</span>)}</p>
           <p class="t-small plan__notes">{built.notes.join(' ')} <a class="link" href={url('plans')}>Compare every line <span class="arrow" aria-hidden="true">→</span></a></p>
         </div>
       </div>
@@ -289,10 +291,10 @@ const stateMark: Record<string, string> = { in: '●', addon: '○', project: '�
                 </tbody>
               </table>
             )}
+            {ex.id === 'certified' && <p class="t-small hold__note">{proof.qualifier}</p>}
           </div>
         </article>
       ))}
-      <p class="t-small measure proof__qualifier">{proof.qualifier}</p>
     </div>
   </section>
 
