@@ -303,13 +303,11 @@ body[data-tone='night'] .link { color: var(--sky); }
   .doors .door:hover .door__photo > *, .doors .door:focus-within .door__photo > * { translate: -50% 0; }
   /* The words keep the width of a closed door, so opening one never re-wraps them. */
   .door__text { width: var(--door-w); padding-right: var(--s-5); }
+  /* Both lines under a door are always there to read: nothing waits for a pointer. While one door is
+     open the others narrow, so they keep only their names. */
   .door__line, .door__sub { transition: opacity var(--d-2) var(--ease); }
-  .door__sub { opacity: 0; }
-  .door:hover .door__sub, .door:focus-within .door__sub { opacity: 1; transition-delay: var(--d-1); }
-  /* While one door is open the others keep only their names. */
-  .doors:has(.door:hover, .door:focus-within) .door:not(:hover, :focus-within) .door__line { opacity: 0; }
+  .doors:has(.door:hover, .door:focus-within) .door:not(:hover, :focus-within) :is(.door__line, .door__sub) { opacity: 0; }
 }
-@media (min-width: 1101px) and (hover: none) { .door__sub { opacity: 1; } }
 
 /* Narrower screens: two by two, then one by one. Each picture simply fills its window. */
 @media (max-width: 1100px) {
