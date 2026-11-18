@@ -98,7 +98,9 @@ body[data-tone='night'] .link { color: var(--sky); }
 .built__stage[data-plan='advanced'] [data-plan-panel]:not([data-plan-panel='advanced']),
 .built__stage[data-plan='enterprise'] [data-plan-panel]:not([data-plan-panel='enterprise']) { visibility: hidden; opacity: 0; }
 @media (prefers-reduced-motion: no-preference) { .plan__facts { transition: opacity var(--d-2) var(--ease); } }
-.plan__table { grid-column: 2; grid-row: 1 / span 2; font-size: var(--t-small); }
+/* The table and the way to the full comparison are one block: the link sits directly under the table it continues. */
+.plan__compare { grid-column: 2; grid-row: 1 / span 2; display: grid; gap: var(--s-5); min-width: 0; }
+.plan__table { width: 100%; font-size: var(--t-small); }
 .plan__table th, .plan__table td { text-align: left; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); font-weight: 400; vertical-align: top; }
 .plan__table thead th { font-size: var(--t-label); font-weight: 500; color: var(--fg-3); }
 .plan__table td { color: var(--fg-3); white-space: nowrap; transition: color var(--d-2) var(--ease), background-color var(--d-3) var(--ease); }
@@ -112,14 +114,14 @@ body[data-tone='night'] .link { color: var(--sky); }
 .built__where .t-question { grid-column: 1 / span 4; }
 .built__where > div { grid-column: 6 / span 7; display: grid; gap: var(--s-4); }
 /* The key to the marks: shown only where the table shows marks without their words (a phone). */
-.plan__key { display: none; grid-column: 1 / -1; flex-wrap: wrap; gap: 6px 20px; font-size: var(--t-small); color: var(--fg-2); }
+.plan__key { display: none; flex-wrap: wrap; gap: 6px 20px; font-size: var(--t-small); color: var(--fg-2); }
 @media (max-width: 1000px) {
   /* minmax(0, …): a plain 1fr lets the table's narrowest possible width (328px) set the column, which pushed
      this whole section past the edge of a 320 to 360px screen. */
   .built__stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'foundation' 'figure' 'yours' 'shaped' 'supported' 'plan'; }
   .built__figure { max-width: 460px; }
   .plan { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
-  .plan__table, .plan__pick, .plan__notes { grid-column: 1; grid-row: auto; }
+  .plan__compare, .plan__pick, .plan__notes { grid-column: 1; grid-row: auto; }
   .plan__table td { white-space: normal; }
   .built__intro .t-question, .built__intro .t-lede, .built__where .t-question, .built__where > div { grid-column: 1 / -1; }
 }
@@ -153,6 +155,8 @@ body[data-tone='night'] .link { color: var(--sky); }
 .scope__body > .commitments { grid-column: 1 / span 6; grid-row: 2 / span 2; align-self: start; }
 .scope__body > .t-lede { grid-column: 8 / -1; grid-row: 1 / span 2; align-self: start; }
 .scope__outside { grid-column: 8 / -1; grid-row: 3; align-self: end; }
+/* Home: the way to the situations on the Safe Workspace page, in the same place, on the commitments' last line. */
+.scope__more { grid-column: 8 / -1; grid-row: 3; align-self: end; }
 .commitments li { padding-block: var(--s-4); border-top: 1px solid var(--rule); color: var(--fg-2); }
 .commitments strong { color: var(--fg); }
 /* Two columns, the same as the two boxes: the answer sits under "Inside", and the closing note under
@@ -183,7 +187,7 @@ body[data-tone='night'] .link { color: var(--sky); }
 @media (max-width: 900px) {
   .scope__head .t-question, .scope__head .t-h1 { grid-column: 1 / -1; }
   .scope__body { grid-template-rows: none; }
-  .scope__principle, .scope__body > .commitments, .scope__body > .t-lede, .scope__outside { grid-column: 1 / -1; grid-row: auto; }
+  .scope__principle, .scope__body > .commitments, .scope__body > .t-lede, .scope__outside, .scope__more { grid-column: 1 / -1; grid-row: auto; }
   .lineof thead { display: none; }
   .lineof tbody tr { display: grid; }
   .lineof tbody th, .lineof tbody td { width: auto; border: 0; padding: 4px 0; }

@@ -51,6 +51,7 @@ export const built = {
   },
   notes: ['Each plan has one price per user, per month, and every plan starts at 50 users.', 'Core stops at 300 users because Microsoft 365 Business Premium does. That limit is Microsoft’s, not ours.'],
   notesTruth: ['BP §5.1', 'BP §8.2'],
+  planLink: 'Compare the three plans, line by line',
 };
 
 export const scope = {
@@ -72,6 +73,8 @@ export const scope = {
     { lead: 'Scope doesn’t move mid-contract.', body: 'Additions go through a formal change order, documented and priced before work begins.' },
   ],
   commitmentsTruth: ['BP §4.2'],
+  // Home links to the situations; the Safe Workspace page holds them.
+  more: 'Try a few situations',
   explorerPrompt: 'Whose problem is it? Try a few.',
   qualifier: 'Examples. Your own scope is set in writing at onboarding.',
 };
